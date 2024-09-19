@@ -15,12 +15,17 @@
 #include "driver/gpio.h"
 #include "driver/uart.h"
 
-#include <stdio.h>
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
 #include "ssd1306.h"
+
+#include <stdio.h>
+#include <vector>
+
+#include "camera.hpp"
+
 
 // This is necessary because it allows ESP-IDF to find the main function,
 // even though C++ mangles the function name.
@@ -30,48 +35,15 @@ void app_main(void);
 
 using contour_t = std::vector<cv::Point2i>;
 
-cv::Mat get_frame(camera_fb_t** fb_p)
-{
-    // If a previous picture has been taken, give the frame-buffer back.
-    if (*fb_p != nullptr)
-    {
-        esp_camera_fb_return(*fb_p);
-    }
-
-    // Take the picture.
-    *fb_p = esp_camera_fb_get();
-    auto fb = *fb_p;
-    if (!fb) {
-        ESP_LOGE("LOG", "Camera capture failed");
-        return cv::Mat();
-    }
-
-    // Build the OpenCV matrix.
-    // CV_8UC2 is two-channel color, with 8-bit channels.
-    auto result = cv::Mat(fb->height, fb->width, CV_8UC2, fb->buf);
-
-    // Flip the bytes of the matrix so that it can be processed using OpenCV functions.
-    for (auto row = 0; row < result.rows; row++)
-    {
-        for (auto col = 0; col < result.cols; col++)
-        {
-            auto& pixel = result.at<cv::Vec2b>(row, col);
-            const auto temp = pixel[0];
-            pixel[0] = pixel[1];
-            pixel[1] = temp;
-        }
-    }
-
-    return result;
-}
-
 void app_main(void)
 {
-    ESP_LOGE("LOG", "TEST LOG");
+    ESP_LOGI("INIT", "Initializing Camera");
+    ESPCamera::config_cam();
     
-    [[maybe_unused]] camera_fb_t* fb = nullptr;
+    camera_fb_t* fb = nullptr;
 
-    //cv::Mat working_frame = get_frame(&fb);
+    ESP_LOGI("INIT", "Getting test frame");
+    cv::Mat working_frame = ESPCamera::get_frame(&fb);
 
     gpio_set_direction(GPIO_NUM_33, GPIO_MODE_OUTPUT);
 
