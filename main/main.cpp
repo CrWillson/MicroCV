@@ -83,4 +83,7 @@ void app_main(void)
         ON = !ON;
         vTaskDelay(200);
     }
+
+    short data = 0x69;
+    uart_write_bytes(UART_NUM_0, &data, 1);
 }
