@@ -1,7 +1,7 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  espressif/ssd1306: "^1.0.5~1"
-  espressif/opencv: "^4.7.0~5"
+  #espressif/ssd1306: "^1.0.5~1"
+  #espressif/opencv: "^4.7.0~5"
   espressif/esp32-camera: "^2.0.11"
   ## Required IDF version
   idf:
