@@ -63,3 +63,20 @@ void LCD::lcd_draw_matrix(SSD1306_t& screen, const cv::Mat& bin_mat)
     }
     ssd1306_show_buffer(&screen);
 }
+
+
+/// @brief Prints data about the detection process to the LCD screen.
+/// @param screen The screen to print to.
+/// @param params A struct containing values to print to the screen.
+void LCD::output_to_screen(SSD1306_t& screen, LCD::PrintParams& params)
+{
+    cv::resize(params.frame, params.frame, cv::Size(LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT));
+    LCD::lcd_draw_matrix(screen, params.frame);
+
+    // Calculate the FPS.
+    //const auto delta_ticks = xTaskGetTickCount() - params.start_tick;
+    //const auto framerate = static_cast<double>(configTICK_RATE_HZ) / delta_ticks; // How many seconds it took to process a frame.
+
+    LCD::lcd_draw_data(screen, "Stop Detected:", params.stop_detected);
+    LCD::lcd_draw_data(screen, "Dist:", params.outside_dist_from_ideal);
+}

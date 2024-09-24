@@ -24,8 +24,9 @@
 // If this is a "1", then send the raw image from the ESP-32 over the serial port. If 0, don't.
 #define CALIBRATION_MODE 0
 
-using contour_t = std::vector<cv::Point2i>;
-
+#define PRINT_LINE_THRESH 0
+#define PRINT_STOP_THRESH 0
+#define PRINT_COMBINED_THRESH 1
 
 // The pin to write to.
 #define TX_GPIO GPIO_NUM_1
@@ -34,4 +35,4 @@ using contour_t = std::vector<cv::Point2i>;
 #define UART_NUM UART_NUM_0
 
 // The baudrate of the TX communication.
-constexpr uint32_t tx_baud = 115200;
+constexpr uint32_t tx_baud = 500000;
