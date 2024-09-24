@@ -3,6 +3,7 @@ idf_component_register(
         "main.cpp"
         "camera.cpp"
         "lcd.cpp"
+        "microcv.cpp"
     INCLUDE_DIRS 
         "."
         "../include"
