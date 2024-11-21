@@ -42,6 +42,8 @@ void app_main(void);
 // Global variables
 camera_fb_t* fb = nullptr;
 cv::Mat frame;
+int8_t dist = 0;
+int8_t height = 0;
 
 SSD1306_t screen; // The screen device struct.
 
@@ -75,16 +77,16 @@ inline void main_loop(void* params = nullptr)
 
         cv::Mat1b whiteMask;
         cv::Mat1b whiteLine;
-        int8_t dist = 0;
-        bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist);
+        bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
         cv::Mat1b carMask;
         bool carDetected = MicroCV2::processCarImg(frame, carMask);
         
         LCD::PrintParams params;
         params.start_tick = start_tick;
-        params.frame = whiteLine | redMask | carMask;
-        params.outside_dist_from_ideal = dist;
+        params.frame = whiteLine | whiteMask | redMask | carMask;
+        params.dist = dist;
+        params.height = height;
         params.stop_detected = stopDetected;
         params.car_detected = carDetected;
         LCD::output_to_screen(screen, params);
@@ -92,7 +94,8 @@ inline void main_loop(void* params = nullptr)
 
         auto packedByte = packValues(dist, stopDetected, carDetected);
         std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
-        uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
+        //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
+        printf(byteString.c_str());
 
         /*
         // Crop the current frame so that it will fit on the screen.

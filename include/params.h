@@ -22,9 +22,9 @@ constexpr uint8_t IMG_ROWS = 96;
 constexpr uint8_t IMG_COLS = 96;
 
 // Stop line constants
-constexpr uint8_t STOPBOX_TL_X          = 45;
+constexpr uint8_t STOPBOX_TL_X          = 20;
 constexpr uint8_t STOPBOX_TL_Y          = 75;
-constexpr uint8_t STOPBOX_BR_X          = 70;
+constexpr uint8_t STOPBOX_BR_X          = 45;
 constexpr uint8_t STOPBOX_BR_Y          = 90;
 
 const cv::Point2i STOPBOX_TL(STOPBOX_TL_X,STOPBOX_TL_Y);
@@ -38,12 +38,12 @@ constexpr uint8_t STOP_BLUE_TOLERANCE   = 30;
 
 
 // White line constants
-constexpr uint8_t WHITELINE_CROP        = 55;
+constexpr uint8_t WHITELINE_CROP        = 50;
 constexpr uint8_t WHITE_RED_THRESH      = 160;
 constexpr uint8_t WHITE_GREEN_THRESH    = 170;
 constexpr uint8_t WHITE_BLUE_THRESH     = 100;
-constexpr uint16_t WHITE_MIN_SIZE       = 50;
-constexpr uint8_t WHITE_CENTER_POS      = 50;
+constexpr uint16_t WHITE_MIN_SIZE       = 40;
+constexpr uint8_t WHITE_CENTER_POS      = 42;
 
 
 // Car detect constants

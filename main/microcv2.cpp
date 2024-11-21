@@ -39,6 +39,8 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
         }
     }
 
+    cv::rectangle(mask, STOPBOX_TL, STOPBOX_BR, cv::Scalar(255), 1);
+
     uint16_t percentRed = (redCount*10000) / STOPBOX_AREA;
     return percentRed >= (PERCENT_TO_STOP*100);
 }
@@ -68,7 +70,7 @@ bool MicroCV2::processCarImg(const cv::Mat& image, cv::Mat1b& mask)
     return percentCar >= (PERCENT_TO_CAR*100);
 }
 
-bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist)
+bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist, int8_t& height)
 {
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
     centerLine = cv::Mat::zeros(image.size(), CV_8UC1);
@@ -107,8 +109,10 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
 
     cv::Rect boundingBox = cv::boundingRect(contours[maxInd]);
     dist = boundingBox.x + boundingBox.width / 2;
+    height = boundingBox.y + boundingBox.height / 2;
 
     cv::line(centerLine, cv::Point(dist, 0), cv::Point(dist, mask.rows - 1), cv::Scalar(255), 1);
+    cv::line(centerLine, cv::Point(0, height), cv::Point(mask.cols - 1, height), cv::Scalar(255), 1);
     dist -= WHITE_CENTER_POS;
 
     return true;

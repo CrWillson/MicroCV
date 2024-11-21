@@ -87,7 +87,7 @@ void LCD::output_to_screen(SSD1306_t& screen, LCD::PrintParams& params)
     const auto framerate = static_cast<double>(configTICK_RATE_HZ) / delta_ticks; // How many seconds it took to process a frame.
 
     LCD::lcd_draw_data(screen, "Stop:", params.stop_detected);
-    LCD::lcd_draw_data(screen, "Car:", params.car_detected);
-    LCD::lcd_draw_data(screen, "Dist:", params.outside_dist_from_ideal);
+    LCD::lcd_draw_data(screen, "Heig:", params.height);
+    LCD::lcd_draw_data(screen, "Dist:", params.dist);
     LCD::lcd_draw_data(screen, "FR:", framerate);
 }

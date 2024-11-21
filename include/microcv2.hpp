@@ -29,6 +29,6 @@ namespace MicroCV2 {
 
     bool processCarImg(const cv::Mat& img, cv::Mat1b& mask);
 
-    bool processWhiteImg(const cv::Mat& img, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist);
+    bool processWhiteImg(const cv::Mat& img, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist, int8_t& height);
 
 }
