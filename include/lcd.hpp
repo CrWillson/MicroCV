@@ -9,6 +9,8 @@
 // Stdlib imports
 #include <vector>
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 // LCD imports
 #include "ssd1306.h"
@@ -25,13 +27,13 @@ namespace LCD {
 /// @brief Parameters which are available to the LCD screen printing.
 class PrintParams {
 public:
-    PrintParams(): frame(cv::Mat1b()), outside_line_slope(0), start_tick(0), outside_dist_from_ideal(0), stop_detected(false) {}
+    PrintParams(): frame(cv::Mat1b()), start_tick(0), outside_dist_from_ideal(0), stop_detected(false), car_detected(false) {}
 
-    cv::Mat1b frame;                /// @brief The image to print to the screen.
-    float outside_line_slope;       /// @brief The slope of the detected outside line.
-    TickType_t start_tick;          /// @brief The number of ticks which have thus far passed.
-    int outside_dist_from_ideal;    /// @brief The number of pixels the line on the screen is from its ideal, calibrated position.
-    bool stop_detected;             /// @brief Whether the stop line has been detected.
+    cv::Mat1b frame;                ///< The image to print to the screen.
+    TickType_t start_tick;          ///< The number of ticks which have thus far passed.
+    int8_t outside_dist_from_ideal;    ///< The number of pixels the line on the screen is from its ideal, calibrated position.
+    bool stop_detected;             ///< Whether the stop line has been detected.
+    bool car_detected;              ///< Whether a car has been detected
 };
 
 
@@ -67,6 +69,7 @@ void lcd_draw_string(SSD1306_t& screen, std::vector<std::string>& lines, int sta
 /// @param data The data.
 /// @param row The row on which to print.
 void lcd_draw_data(SSD1306_t& screen, std::string preamble, int data, int row = APPEND_ROW);
+void lcd_draw_data(SSD1306_t& screen, std::string preamble, double data, int row = APPEND_ROW);
 
 
 /// @brief Draws a string of this format in a row: "{preamble} {data}"

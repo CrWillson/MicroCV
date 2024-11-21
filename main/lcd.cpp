@@ -39,12 +39,21 @@ void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, int data, int r
     lcd_draw_string(screen, arg, row);
 }
 
+void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, double data, int row)
+{
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(1) << data;
+    std::string arg = preamble + " " + oss.str();
+    lcd_draw_string(screen, arg, row);
+}
 
 void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, bool data, int row)
 {
-    std::string arg = preamble + " " + (data ? "true" : "false");
+    std::string arg = preamble + " " + (data ? "t" : "f");
     lcd_draw_string(screen, arg, row);
 }
+
+
 
 
 /// @brief Writes a binary matrix to a provided LCD screen.
@@ -74,9 +83,11 @@ void LCD::output_to_screen(SSD1306_t& screen, LCD::PrintParams& params)
     LCD::lcd_draw_matrix(screen, params.frame);
 
     // Calculate the FPS.
-    //const auto delta_ticks = xTaskGetTickCount() - params.start_tick;
-    //const auto framerate = static_cast<double>(configTICK_RATE_HZ) / delta_ticks; // How many seconds it took to process a frame.
+    const auto delta_ticks = xTaskGetTickCount() - params.start_tick;
+    const auto framerate = static_cast<double>(configTICK_RATE_HZ) / delta_ticks; // How many seconds it took to process a frame.
 
-    LCD::lcd_draw_data(screen, "Stop Detected:", params.stop_detected);
+    LCD::lcd_draw_data(screen, "Stop:", params.stop_detected);
+    LCD::lcd_draw_data(screen, "Car:", params.car_detected);
     LCD::lcd_draw_data(screen, "Dist:", params.outside_dist_from_ideal);
+    LCD::lcd_draw_data(screen, "FR:", framerate);
 }

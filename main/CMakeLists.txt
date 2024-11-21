@@ -3,7 +3,8 @@ idf_component_register(
         "main.cpp"
         "camera.cpp"
         "lcd.cpp"
-        "microcv.cpp"
+        #"microcv.cpp"
+        "microcv2.cpp"
     INCLUDE_DIRS 
         "."
         "../include"
@@ -13,6 +14,8 @@ idf_component_register(
         esp32-camera
         ssd1306
         spiffs
+        fatfs
+        sdmmc
 )
             
 add_prebuilt_library(opencv_imgcodecs "opencv/libopencv_imgcodecs.a")

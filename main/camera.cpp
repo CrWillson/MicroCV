@@ -64,7 +64,7 @@ cv::Mat ESPCamera::get_frame(camera_fb_t** fb_p)
     auto result = cv::Mat(fb->height, fb->width, CV_8UC2, fb->buf);
 
     // Flip the bytes of the matrix so that it can be processed using OpenCV functions.
-    for (auto row = 0; row < result.rows; row++)
+    /*for (auto row = 0; row < result.rows; row++)
     {
         for (auto col = 0; col < result.cols; col++)
         {
@@ -73,9 +73,39 @@ cv::Mat ESPCamera::get_frame(camera_fb_t** fb_p)
             pixel[0] = pixel[1];
             pixel[1] = temp;
         }
-    }
+    }*/
 
     return result;
+}
+
+esp_err_t ESPCamera::get_frame(cv::Mat& image)
+{
+    const char* TAG = "CAMERA";
+    
+    auto* fb = esp_camera_fb_get();
+    if (!fb) {
+        ESP_LOGE(TAG, "Camera capture failed");
+        return ESP_FAIL;
+    }
+
+    image.create(fb->height, fb->width, CV_8UC2);
+    memcpy(image.data, fb->buf, fb->len);
+
+    for (auto row = 0; row < image.rows; row++)
+    {
+        for (auto col = 0; col < image.cols; col++)
+        {
+            auto& pixel = image.at<cv::Vec2b>(row, col);
+            const auto temp = pixel[0];
+            pixel[0] = pixel[1];
+            pixel[1] = temp;
+        }
+    }
+
+    esp_camera_fb_return(fb);
+    //ESP_LOGI(TAG, "Image captured successfully: %dx%d", image.cols, image.rows);
+
+    return ESP_OK;
 }
 
 void ESPCamera::debug::print_matrix(const cv::Mat& mat) 

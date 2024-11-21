@@ -4,6 +4,8 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <algorithm>
+#include <format>
+#include <bitset>
 
 
 // Esp imports
@@ -15,8 +17,8 @@
 #include "driver/gpio.h"
 #include "driver/uart.h"
 
-
 // FreeRTOS imports
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/portmacro.h"
@@ -25,10 +27,9 @@
 // In-project imports
 #include "camera.hpp"
 #include "lcd.hpp"
-#include "microcv.hpp"
+//#include "microcv.hpp"
+#include "microcv2.hpp"
 
-
-static char TAG[]="lane_detection";
 
 
 // This is necessary because it allows ESP-IDF to find the main function,
@@ -38,15 +39,62 @@ void app_main(void);
 }
 
 
-
+// Global variables
 camera_fb_t* fb = nullptr;
+cv::Mat frame;
+
 SSD1306_t screen; // The screen device struct.
 
+
+// Function to pack an int8_t and two bools into a 10-bit integer
+uint16_t packValues(int8_t num, bool b1, bool b2) {
+    // Mask num to ensure it fits into the 8 least significant bits
+    uint16_t packedNum = static_cast<uint16_t>(num & 0xFF);
+
+    // Pack the bools into the 9th and 10th bits
+    uint16_t packedValue = (b1 << 8) | (b2 << 9) | packedNum;
+    return packedValue;
+}
+
+
 /// @brief The main driver loop.
-inline void main_loop()
+inline void main_loop(void* params = nullptr)
 {
     while (true)
     {
+        const auto start_tick = xTaskGetTickCount();
+
+        bool result = ESPCamera::get_frame(frame);
+        if (result != ESP_OK) {
+            vTaskDelay(1);
+            continue;
+        }
+        
+        cv::Mat1b redMask;
+        bool stopDetected = MicroCV2::processRedImg(frame, redMask);
+
+        cv::Mat1b whiteMask;
+        cv::Mat1b whiteLine;
+        int8_t dist = 0;
+        bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist);
+
+        cv::Mat1b carMask;
+        bool carDetected = MicroCV2::processCarImg(frame, carMask);
+        
+        LCD::PrintParams params;
+        params.start_tick = start_tick;
+        params.frame = whiteLine | redMask | carMask;
+        params.outside_dist_from_ideal = dist;
+        params.stop_detected = stopDetected;
+        params.car_detected = carDetected;
+        LCD::output_to_screen(screen, params);
+        
+
+        auto packedByte = packValues(dist, stopDetected, carDetected);
+        std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
+        uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
+
+        /*
         // Crop the current frame so that it will fit on the screen.
         cv::Mat working_frame = ESPCamera::get_frame(&fb);
         if (working_frame.size[0] == 0)
@@ -58,8 +106,6 @@ inline void main_loop()
         #if(CALIBRATION_MODE == 1)
         ESPCamera::debug::print_matrix(working_frame);
         #endif
-
-        #if(CALIBRATION_MODE == 0)
 
         const auto start_tick = xTaskGetTickCount();
 
@@ -89,7 +135,7 @@ inline void main_loop()
         params.outside_dist_from_ideal = outside_dist_from_ideal;
         params.outside_line_slope = outside_line_slope;
         params.stop_detected = detected;
-        output_to_screen(screen, params);
+        LCD::output_to_screen(screen, params);
 
         #if PRINT_COMBINED_THRESH == 1
         MicroCV::debug::print_thresh(params.frame);
@@ -103,13 +149,10 @@ inline void main_loop()
 
         constexpr short data = 0x69;
         printf("%x\n", data);
-
-        #endif // CALIBRATION_MODE == 0
-
+        */
         vTaskDelay(1);
     }
 }
-
 
 /// @brief The entry-point.
 void app_main(void)
@@ -121,7 +164,6 @@ void app_main(void)
     ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
 
     // Init tx pin
-    #if(CALIBRATION_MODE == 0)
     uart_config_t uart_config = {
         .baud_rate = tx_baud,
         .data_bits = UART_DATA_8_BITS,
@@ -131,7 +173,18 @@ void app_main(void)
     };
     uart_param_config(UART_NUM_0, &uart_config);
     uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);
-    #endif
 
+    //xTaskCreatePinnedToCore(main_loop, "MainLoop", 4096, NULL, 1, NULL, 0);
     main_loop();
+
+    /*
+    ESPCamera::get_frame(frame);
+
+    for (int y = 0; y < frame.rows; y++) {
+        for (int x = 0; x < frame.cols; x++) {
+            std::string pixel = std::bitset<16>(frame.at<uint16_t>(y,x)).to_string() + " ";
+            uart_write_bytes(UART_NUM, pixel.c_str(), pixel.size());
+        }
+    }*/
+
 }
