@@ -38,6 +38,5 @@ constexpr uint8_t CAM_PIN_PCLK    = 22;
 constexpr uint32_t tx_baud = 500000;
 
 // SD Card file system constants
-constexpr char* MOUNT_POINT = "/sdcard";
 constexpr char* FILE_PREFIX = "IMAGE";
 constexpr char* FILE_EXTEN  = ".BIN";

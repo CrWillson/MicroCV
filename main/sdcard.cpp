@@ -39,3 +39,28 @@ esp_err_t SDCard::mount_sd_card()
     ESP_LOGI(SDCard::TAG, "SD card mounted successfully.");
     return ESP_OK;
 }
+
+
+esp_err_t SDCard::load_params_from_file()
+{
+    std::ifstream file(PARAMS_FILE);
+    if (!file.is_open()) {
+        ESP_LOGE(TAG, "Failed to open parameters file: %s", PARAMS_FILE);
+        return ESP_FAIL;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream ss(line);
+        std::string key, value;
+
+        if (std::getline(ss, key, '=') && std::getline(ss, value)) {
+            try {
+                int intValue = std::stoi(value);
+
+            } catch (const std::exception &e) {
+                ESP_LOGE(TAG, "Invalid value for key %s: %s", key.c_str(), value.c_str());
+            }
+        }
+    }
+}
