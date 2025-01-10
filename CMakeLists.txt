@@ -4,5 +4,13 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.20)
 
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+# Check if IDF_PATH is set before trying to include project.cmake
+if(DEFINED ENV{IDF_PATH})
+    include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+else()
+    message(STATUS "IDF_PATH is not set. This is fine when building from esp-idf environment.")
+endif()
 project(main)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
