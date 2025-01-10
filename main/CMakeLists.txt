@@ -1,11 +1,11 @@
 idf_component_register(
     SRCS 
-        "main.cpp"
         "camera.cpp"
         "lcd.cpp"
-        #"microcv.cpp"
         "microcv2.cpp"
         "sdcard.cpp"
+        "main.cpp"
+        "params.cpp"
     INCLUDE_DIRS 
         "."
         "../include"

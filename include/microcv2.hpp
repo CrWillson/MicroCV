@@ -7,9 +7,9 @@
 #include "opencv2/imgcodecs.hpp"
 #define EPS 192
 
-#include "params.h"
 #include "constants.hpp"
 #include "driver/uart.h"
+#include "params.hpp"
 
 using contour_t = std::vector<cv::Point2i>;
 

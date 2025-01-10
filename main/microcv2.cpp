@@ -1,5 +1,7 @@
 #include "microcv2.hpp"
 
+using namespace PARAMS;
+
 void MicroCV2::RGB565toRGB888(uint16_t pixel, uint16_t& red, uint16_t& blue, uint16_t& green)
 {
     red = (pixel >> 11) & 0x1F;
@@ -31,7 +33,7 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
             RGB565toRGB888(pixel, red, green, blue);
 
             if (red >= green + STOP_GREEN_TOLERANCE && red >= blue + STOP_BLUE_TOLERANCE) {
-                if (x >= STOPBOX_TL.x && x <= STOPBOX_BR.x && y >= STOPBOX_TL.y && y <= STOPBOX_BR.y) {
+                if (x >= STOPBOX_TL_X && x <= STOPBOX_BR_X && y >= STOPBOX_TL_Y && y <= STOPBOX_BR_Y) {
                     redCount++;
                 }
                 mask.at<uchar>(y,x) = 255;
@@ -39,6 +41,8 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
         }
     }
 
+    cv::Point2i STOPBOX_TL(STOPBOX_TL_X, STOPBOX_TL_Y);
+    cv::Point2i STOPBOX_BR(STOPBOX_BR_X, STOPBOX_BR_Y);
     cv::rectangle(mask, STOPBOX_TL, STOPBOX_BR, cv::Scalar(255), 1);
 
     uint16_t percentRed = (redCount*10000) / STOPBOX_AREA;
@@ -58,7 +62,7 @@ bool MicroCV2::processCarImg(const cv::Mat& image, cv::Mat1b& mask)
             RGB565toRGB888(pixel, red, green, blue);
 
             if (green >= red + CAR_RED_TOLERANCE && green >= blue + CAR_BLUE_TOLERANCE) {
-                if (x >= CARBOX_TL.x && x <= CARBOX_BR.x && y >= CARBOX_TL.y && y <= CARBOX_BR.y) {
+                if (x >= CARBOX_TL_X && x <= CARBOX_BR_X && y >= CARBOX_TL_Y && y <= CARBOX_BR_Y) {
                     carCount++;
                 }
                 mask.at<uchar>(y,x) = 255;

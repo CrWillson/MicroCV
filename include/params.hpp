@@ -3,17 +3,9 @@
 ///
 /// Author: Andrew Huffman
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
 #pragma once
 
 #include <stdint.h>
-
-// Opencv Imports
-#undef EPS
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#define EPS 192
 
 constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_t BR_X, const uint8_t BR_Y) {
     if (BR_X >= TL_X && BR_Y >= TL_Y) {
@@ -24,52 +16,45 @@ constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_
 
 // 16 Total parameters to calibrate
 
-// General constants
-constexpr uint8_t IMG_ROWS = 96;
-constexpr uint8_t IMG_COLS = 96;
+namespace PARAMS {
 
-// Stop line constants
-constexpr uint8_t STOPBOX_TL_X          = 20;
-constexpr uint8_t STOPBOX_TL_Y          = 75;
-constexpr uint8_t STOPBOX_BR_X          = 45;
-constexpr uint8_t STOPBOX_BR_Y          = 90;
+    // General constants
+    extern uint8_t IMG_ROWS;
+    extern uint8_t IMG_COLS;
 
-const cv::Point2i STOPBOX_TL(STOPBOX_TL_X,STOPBOX_TL_Y);
-const cv::Point2i STOPBOX_BR(STOPBOX_BR_X,STOPBOX_BR_Y);
-constexpr uint16_t STOPBOX_AREA = BOX_AREA(STOPBOX_TL_X, STOPBOX_TL_Y, STOPBOX_BR_X, STOPBOX_BR_Y);
+    // Stop line constants
+    extern uint8_t STOPBOX_TL_X;
+    extern uint8_t STOPBOX_TL_Y;
+    extern uint8_t STOPBOX_BR_X;
+    extern uint8_t STOPBOX_BR_Y;
+    extern uint16_t STOPBOX_AREA;
 
-constexpr uint8_t PERCENT_TO_STOP       = 10;
-constexpr uint8_t STOP_GREEN_TOLERANCE  = 20;
-constexpr uint8_t STOP_BLUE_TOLERANCE   = 30;
-
-
-// White line constants
-constexpr uint8_t WHITELINE_CROP        = 50;
-constexpr uint8_t WHITE_RED_THRESH      = 160;
-constexpr uint8_t WHITE_GREEN_THRESH    = 170;
-constexpr uint8_t WHITE_BLUE_THRESH     = 100;
-constexpr uint16_t WHITE_MIN_SIZE       = 40;
-constexpr uint8_t WHITE_CENTER_POS      = 42;
+    extern uint8_t PERCENT_TO_STOP;
+    extern uint8_t STOP_GREEN_TOLERANCE;
+    extern uint8_t STOP_BLUE_TOLERANCE;
 
 
-// Car detect constants
-constexpr uint8_t CARBOX_TL_X           = 0;
-constexpr uint8_t CARBOX_TL_Y           = 40;
-constexpr uint8_t CARBOX_BR_X           = 15;
-constexpr uint8_t CARBOX_BR_Y           = 70;
-
-const cv::Point2i CARBOX_TL(CARBOX_TL_X,CARBOX_TL_Y);
-const cv::Point2i CARBOX_BR(CARBOX_BR_X,CARBOX_BR_Y);
-constexpr uint16_t CARBOX_AREA = BOX_AREA(CARBOX_TL_X, CARBOX_TL_Y, CARBOX_BR_X, CARBOX_BR_Y);
+    // White line constants
+    extern uint8_t WHITELINE_CROP;
+    extern uint8_t WHITE_RED_THRESH;
+    extern uint8_t WHITE_GREEN_THRESH;
+    extern uint8_t WHITE_BLUE_THRESH;
+    extern uint16_t WHITE_MIN_SIZE;
+    extern uint8_t WHITE_CENTER_POS;
 
 
+    // Car detect constants
+    extern uint8_t CARBOX_TL_X;
+    extern uint8_t CARBOX_TL_Y;
+    extern uint8_t CARBOX_BR_X;
+    extern uint8_t CARBOX_BR_Y;
+    extern uint16_t CARBOX_AREA;
 
-constexpr uint8_t PERCENT_TO_CAR        = 10;
-constexpr uint8_t CAR_RED_TOLERANCE     = 50;
-constexpr uint8_t CAR_BLUE_TOLERANCE    = 30;
+    extern uint8_t PERCENT_TO_CAR;
+    extern uint8_t CAR_RED_TOLERANCE;
+    extern uint8_t CAR_BLUE_TOLERANCE;
 
-
-
+}
 
 
 /*
