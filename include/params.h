@@ -15,7 +15,14 @@
 #include "opencv2/imgcodecs.hpp"
 #define EPS 192
 
-// 18 Total parameters to calibrate
+constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_t BR_X, const uint8_t BR_Y) {
+    if (BR_X >= TL_X && BR_Y >= TL_Y) {
+        return (BR_X - TL_X + 1) * (BR_Y - TL_Y + 1);
+    }
+    return 0;
+}
+
+// 16 Total parameters to calibrate
 
 // General constants
 constexpr uint8_t IMG_ROWS = 96;
@@ -29,8 +36,7 @@ constexpr uint8_t STOPBOX_BR_Y          = 90;
 
 const cv::Point2i STOPBOX_TL(STOPBOX_TL_X,STOPBOX_TL_Y);
 const cv::Point2i STOPBOX_BR(STOPBOX_BR_X,STOPBOX_BR_Y);
-constexpr uint16_t STOPBOX_AREA = (STOPBOX_BR_X >= STOPBOX_TL_X && STOPBOX_BR_Y >= STOPBOX_TL_Y) 
-                                  ? (STOPBOX_BR_X - STOPBOX_TL_X + 1) * (STOPBOX_BR_Y - STOPBOX_TL_Y + 1) : 0;
+constexpr uint16_t STOPBOX_AREA = BOX_AREA(STOPBOX_TL_X, STOPBOX_TL_Y, STOPBOX_BR_X, STOPBOX_BR_Y);
 
 constexpr uint8_t PERCENT_TO_STOP       = 10;
 constexpr uint8_t STOP_GREEN_TOLERANCE  = 20;
@@ -54,8 +60,9 @@ constexpr uint8_t CARBOX_BR_Y           = 70;
 
 const cv::Point2i CARBOX_TL(CARBOX_TL_X,CARBOX_TL_Y);
 const cv::Point2i CARBOX_BR(CARBOX_BR_X,CARBOX_BR_Y);
-constexpr uint16_t CARBOX_AREA = (CARBOX_BR_X >= CARBOX_TL_X && CARBOX_BR_Y >= CARBOX_TL_Y) 
-                                  ? (CARBOX_BR_X - CARBOX_TL_X + 1) * (CARBOX_BR_Y - CARBOX_TL_Y + 1) : 0;
+constexpr uint16_t CARBOX_AREA = BOX_AREA(CARBOX_TL_X, CARBOX_TL_Y, CARBOX_BR_X, CARBOX_BR_Y);
+
+
 
 constexpr uint8_t PERCENT_TO_CAR        = 10;
 constexpr uint8_t CAR_RED_TOLERANCE     = 50;
