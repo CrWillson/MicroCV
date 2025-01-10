@@ -29,6 +29,7 @@
 #include "lcd.hpp"
 //#include "microcv.hpp"
 #include "microcv2.hpp"
+#include "sdcard.hpp"
 
 
 
@@ -44,6 +45,7 @@ camera_fb_t* fb = nullptr;
 cv::Mat frame;
 int8_t dist = 0;
 int8_t height = 0;
+uint8_t drawCount = 0;
 
 SSD1306_t screen; // The screen device struct.
 
@@ -82,55 +84,25 @@ inline void main_loop(void* params = nullptr)
         cv::Mat1b carMask;
         bool carDetected = MicroCV2::processCarImg(frame, carMask);
         
-        LCD::PrintParams params;
-        params.start_tick = start_tick;
-        params.frame = whiteLine | whiteMask | redMask | carMask;
-        params.dist = dist;
-        params.height = height;
-        params.stop_detected = stopDetected;
-        params.car_detected = carDetected;
-        LCD::output_to_screen(screen, params);
-        
+        if (drawCount % 2 == 0) {
+            LCD::PrintParams params;
+            params.start_tick = start_tick;
+            params.frame = whiteLine | whiteMask | redMask | carMask;
+            params.dist = dist;
+            params.height = height;
+            params.stop_detected = stopDetected;
+            params.car_detected = carDetected;
+            LCD::output_to_screen(screen, params);
+        }
+        drawCount++;
 
         auto packedByte = packValues(dist, stopDetected, carDetected);
         std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         printf(byteString.c_str());
 
+
         /*
-        // Crop the current frame so that it will fit on the screen.
-        cv::Mat working_frame = ESPCamera::get_frame(&fb);
-        if (working_frame.size[0] == 0)
-        {
-            vTaskDelay(1);
-            continue;
-        }
-
-        #if(CALIBRATION_MODE == 1)
-        ESPCamera::debug::print_matrix(working_frame);
-        #endif
-
-        const auto start_tick = xTaskGetTickCount();
-
-        // Get into the right color space for thresholding.
-        cv::Mat bgr;
-        cv::cvtColor(working_frame, bgr, cv::COLOR_BGR5652BGR);
-        cv::Mat hsv;
-        cv::cvtColor(bgr, hsv, cv::COLOR_BGR2HSV, 3);
-
-        // Perform detection on the outsid line.
-        cv::Mat hsv_outside = hsv.clone();
-        cv::Mat1b outside_thresh;
-        cv::Point2i outside_line_center;
-        float outside_line_slope;
-        MicroCV::outside_line_detection(hsv_outside, outside_thresh, outside_line_center, outside_line_slope);
-        int outside_dist_from_ideal = outside_line_center.x - expected_line_pos;
-
-        // Perform detection on the stop line.
-        cv::Mat1b stop_thresh;
-        bool detected;
-        MicroCV::stop_line_detection(hsv, stop_thresh, detected);
-
         // Write to the screen.
         LCD::PrintParams params;
         params.start_tick = start_tick;
