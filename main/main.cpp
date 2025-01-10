@@ -29,8 +29,6 @@
 #include "lcd.hpp"
 //#include "microcv.hpp"
 #include "microcv2.hpp"
-#include "sdcard.hpp"
-
 
 
 // This is necessary because it allows ESP-IDF to find the main function,
