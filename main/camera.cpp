@@ -3,8 +3,6 @@
 /// @brief Configures the ESP-32-CAM.
 void ESPCamera::config_cam()
 {    
-    constexpr char *TAG = "CAM_INIT";
-    
     camera_config_t config;
     config.ledc_channel = LEDC_CHANNEL_0;
     config.ledc_timer = LEDC_TIMER_0;
@@ -35,11 +33,11 @@ void ESPCamera::config_cam()
     // Initialize the camera
     esp_err_t err = esp_camera_init(&config);
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Camera init failed with error 0x%x", err);
+        ESP_LOGE(ESPCamera::TAG, "Camera init failed with error 0x%x", err);
         return;
     }
 
-    ESP_LOGI(TAG, "Camera initialized successfully with resolution 96x96");
+    ESP_LOGI(ESPCamera::TAG, "Camera initialized successfully with resolution 96x96");
 }
 
 
@@ -55,7 +53,7 @@ cv::Mat ESPCamera::get_frame(camera_fb_t** fb_p)
     *fb_p = esp_camera_fb_get();
     auto fb = *fb_p;
     if (!fb) {
-        ESP_LOGE("TAG", "Camera capture failed");
+        ESP_LOGE(ESPCamera::TAG, "Camera capture failed");
         return cv::Mat();
     }
 
@@ -80,11 +78,9 @@ cv::Mat ESPCamera::get_frame(camera_fb_t** fb_p)
 
 esp_err_t ESPCamera::get_frame(cv::Mat& image)
 {
-    const char* TAG = "CAMERA";
-    
     auto* fb = esp_camera_fb_get();
     if (!fb) {
-        ESP_LOGE(TAG, "Camera capture failed");
+        ESP_LOGE(ESPCamera::TAG, "Camera capture failed");
         return ESP_FAIL;
     }
 
