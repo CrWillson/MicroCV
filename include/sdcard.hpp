@@ -21,7 +21,7 @@ namespace SDCard {
     static constexpr const char* PARAMS_FILE  = "/sdcard/PARAMS.TXT";
     static constexpr const char* TAG          = "SDCARD";
 
-    esp_err_t mount_sd_card(sdmmc_card_t** card);
+    esp_err_t mount_sd_card();
 
     esp_err_t load_params_from_file();
 

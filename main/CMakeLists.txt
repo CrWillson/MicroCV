@@ -17,6 +17,7 @@ idf_component_register(
         spiffs
         fatfs
         sdmmc
+        esp_driver_gpio
 )
             
 add_prebuilt_library(opencv_imgcodecs "opencv/libopencv_imgcodecs.a")

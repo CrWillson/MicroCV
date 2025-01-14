@@ -1,7 +1,8 @@
 #include "sdcard.hpp"
 
-esp_err_t SDCard::mount_sd_card(sdmmc_card_t** card)
-{
+esp_err_t SDCard::mount_sd_card() {
+    static const char *TAG = "SD_Mount";
+
     // SD card configuration
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
     sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
@@ -20,22 +21,23 @@ esp_err_t SDCard::mount_sd_card(sdmmc_card_t** card)
         .allocation_unit_size = 16 * 1024
     };
 
-    esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, card);
+    sdmmc_card_t *card;
+    esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, &card);
 
     if (ret != ESP_OK) {
         if (ret == ESP_FAIL) {
-            ESP_LOGE(SDCard::TAG, "Failed to mount filesystem. "
+            ESP_LOGE(TAG, "Failed to mount filesystem. "
                      "If you want the card to be formatted, set format_if_mount_failed = true.");
         } else {
-            ESP_LOGE(SDCard::TAG, "Failed to initialize the card (%s). "
+            ESP_LOGE(TAG, "Failed to initialize the card (%s). "
                      "Make sure SD card lines have pull-up resistors in place.", esp_err_to_name(ret));
         }
         return ret;
     }
 
     // Card has been initialized, print its properties
-    sdmmc_card_print_info(stdout, *card);
-    ESP_LOGI(SDCard::TAG, "SD card mounted successfully.");
+    sdmmc_card_print_info(stdout, card);
+    ESP_LOGI(TAG, "SD card mounted successfully.");
     return ESP_OK;
 }
 
