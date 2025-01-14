@@ -16,11 +16,7 @@
 #include "ssd1306.h"
 
 // Opencv Imports
-#undef EPS
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#define EPS 192
+#include "opencv2.hpp"
 
 namespace LCD {
 

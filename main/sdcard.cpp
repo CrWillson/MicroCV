@@ -1,6 +1,6 @@
 #include "sdcard.hpp"
 
-esp_err_t SDCard::mount_sd_card()
+esp_err_t SDCard::mount_sd_card(sdmmc_card_t** card)
 {
     // SD card configuration
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
@@ -20,8 +20,7 @@ esp_err_t SDCard::mount_sd_card()
         .allocation_unit_size = 16 * 1024
     };
 
-    sdmmc_card_t *card;
-    esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, &card);
+    esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, card);
 
     if (ret != ESP_OK) {
         if (ret == ESP_FAIL) {
@@ -35,8 +34,39 @@ esp_err_t SDCard::mount_sd_card()
     }
 
     // Card has been initialized, print its properties
-    sdmmc_card_print_info(stdout, card);
+    sdmmc_card_print_info(stdout, *card);
     ESP_LOGI(SDCard::TAG, "SD card mounted successfully.");
+    return ESP_OK;
+}
+
+
+esp_err_t SDCard::dismount_sd_card(sdmmc_card_t* card)
+{
+    if (!card) {
+        ESP_LOGE(TAG, "Card pointer is null.");
+        return ESP_ERR_INVALID_ARG;
+    }
+    
+    esp_err_t ret = esp_vfs_fat_sdcard_unmount(MOUNT_POINT, card);
+
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to unmount SD card (%s)", esp_err_to_name(ret));
+        return ret;
+    }
+
+    ESP_LOGI(TAG, "SD card unmounted successfully.");
+
+    // // Deinitialize SDMMC host (optional, but good practice)
+    // sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+
+    // ret = sdmmc_host_deinit();
+    // if (ret != ESP_OK) {
+    //     ESP_LOGE(TAG, "Failed to deinitialize SDMMC host (%s)", esp_err_to_name(ret));
+    //     return ret;
+    // }
+
+    // ESP_LOGI(TAG, "SDMMC host deinitialized successfully.");
+
     return ESP_OK;
 }
 
@@ -50,6 +80,8 @@ esp_err_t SDCard::load_params_from_file()
     }
 
     std::string line;
+    auto& params = PARAMS::getParams();
+
     while (std::getline(file, line)) {
         std::istringstream ss(line);
         std::string key, value;
@@ -57,10 +89,13 @@ esp_err_t SDCard::load_params_from_file()
         if (std::getline(ss, key, '=') && std::getline(ss, value)) {
             try {
                 int intValue = std::stoi(value);
-
+                params[key] = (uint16_t)intValue;
+                ESP_LOGI(TAG, "Set %s to %s", key.c_str(), value.c_str());
             } catch (const std::exception &e) {
                 ESP_LOGE(TAG, "Invalid value for key %s: %s", key.c_str(), value.c_str());
             }
         }
     }
+
+    return ESP_OK;
 }

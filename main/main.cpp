@@ -1,3 +1,6 @@
+// Pin out guide for the AI Thinker ESP32-Cam
+// https://github.com/raphaelbs/esp32-cam-ai-thinker/blob/master/docs/esp32cam-pin-notes.md
+
 // Stdlib imports imports
 #include <stdio.h>
 #include <sys/unistd.h>
@@ -16,6 +19,12 @@
 #include "esp_log.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
+
+#include "FS.h"                // SD Card ESP32
+#include "soc/soc.h"           // Disable brownour problems
+#include "soc/rtc_cntl_reg.h"  // Disable brownour problems
+#include "SD.h"
+#include "SPI.h"
 
 // FreeRTOS imports
 
@@ -37,7 +46,6 @@ extern "C" {
 void app_main(void);
 }
 
-
 // Global variables
 camera_fb_t* fb = nullptr;
 cv::Mat frame;
@@ -45,7 +53,8 @@ int8_t dist = 0;
 int8_t height = 0;
 uint8_t drawCount = 0;
 
-SSD1306_t screen; // The screen device struct.
+SSD1306_t screen;
+
 
 
 // Function to pack an int8_t and two bools into a 10-bit integer
@@ -127,37 +136,133 @@ inline void main_loop(void* params = nullptr)
     }
 }
 
-/// @brief The entry-point.
-void app_main(void)
-{
-    ESPCamera::config_cam();
+// Define CS pin for the SD card module
+#define SD_MISO     2
+#define SD_MOSI     15
+#define SD_SCLK     14
+#define SD_CS       13
+SPIClass sdSPI(VSPI);
 
-    // Init screen
-    i2c_master_init(&screen, CONFIG_SDA_GPIO, CONFIG_SCL_GPIO, CONFIG_RESET_GPIO);
-    ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
+String dataMessage;
 
-    // Init tx pin
-    uart_config_t uart_config = {
-        .baud_rate = tx_baud,
-        .data_bits = UART_DATA_8_BITS,
-        .parity = UART_PARITY_DISABLE,
-        .stop_bits = UART_STOP_BITS_1,
-        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
-    };
-    uart_param_config(UART_NUM_0, &uart_config);
-    uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);
+// Append data to the SD card (DON'T MODIFY THIS FUNCTION)
+void appendFile(fs::FS &fs, const char * path, const char * message) {
+    Serial.printf("Appending to file: %s\n", path);
 
-    //xTaskCreatePinnedToCore(main_loop, "MainLoop", 4096, NULL, 1, NULL, 0);
-    main_loop();
-
-    /*
-    ESPCamera::get_frame(frame);
-
-    for (int y = 0; y < frame.rows; y++) {
-        for (int x = 0; x < frame.cols; x++) {
-            std::string pixel = std::bitset<16>(frame.at<uint16_t>(y,x)).to_string() + " ";
-            uart_write_bytes(UART_NUM, pixel.c_str(), pixel.size());
-        }
-    }*/
-
+    File file = fs.open(path, FILE_APPEND);
+    if(!file) {
+        Serial.println("Failed to open file for appending");
+        return;
+    }
+    if(file.print(message)) {
+        Serial.println("Message appended");
+    } else {
+        Serial.println("Append failed");
+    }
+    file.close();
 }
+
+void logSDCard() {
+    //dataMessage = String(readingID) + "," + String(dayStamp) + "," + String(timeStamp) + "," + 
+    //              String(temperature) + "\r\n";
+    dataMessage = "Hello World \n";
+    Serial.print("Save data: ");
+    Serial.println(dataMessage);
+    appendFile(SD, "/data1.txt", dataMessage.c_str());
+}
+
+// Write to the SD card (DON'T MODIFY THIS FUNCTION)
+void writeFile(fs::FS &fs, const char * path, const char * message) {
+    Serial.printf("Writing file: %s\n", path);
+
+    File file = fs.open(path, FILE_WRITE);
+    if(!file) {
+        Serial.println("Failed to open file for writing");
+        return;
+    }
+    if(file.print(message)) {
+        Serial.println("File written");
+    } else {
+        Serial.println("Write failed");
+    }
+    file.close();
+}
+
+void app_main()
+{
+    // Initialize SD card
+    //SD.begin(SD_CS);  
+    sdSPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
+    if(!SD.begin(SD_CS, sdSPI)) {
+        Serial.println("Card Mount Failed");
+        return;
+    }
+    Serial.println("1");
+    uint8_t cardType = SD.cardType();
+    if(cardType == CARD_NONE) {
+        Serial.println("No SD card attached");
+        return;
+    }
+    Serial.println("Initializing SD card...");
+    if (!SD.begin(SD_CS)) {
+        Serial.println("ERROR - SD card initialization failed!");
+        return;    // init failed
+    }
+    Serial.println("2");
+    // If the data.txt file doesn't exist
+    // Create a file on the SD card and write the data labels
+    File file = SD.open("/data1.txt");
+    if(!file) {
+        Serial.println("File doens't exist");
+        Serial.println("Creating file...");
+        writeFile(SD, "/data1.txt", "Reading ID, Date, Hour, Temperature \r\n");
+    }
+    else {
+        Serial.println("File already exists");  
+    }
+    file.close();
+    logSDCard();
+}
+
+// /// @brief The entry-point.
+// void app_main(void)
+// {
+//     if (!mount_sdcard()) {
+//         ESP_LOGE("SD", "SD card initialization failed. Halting.");
+//         return;
+//     }
+//     unmount_sdcard();
+    
+//     ESPCamera::config_cam();
+
+//     // Init screen
+//     i2c_master_init(&screen, CONFIG_SDA_GPIO, CONFIG_SCL_GPIO, CONFIG_RESET_GPIO);
+//     ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
+
+    
+
+//     // Init tx pin
+//     uart_config_t uart_config = {
+//         .baud_rate = tx_baud,
+//         .data_bits = UART_DATA_8_BITS,
+//         .parity = UART_PARITY_DISABLE,
+//         .stop_bits = UART_STOP_BITS_1,
+//         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
+//     };
+//     uart_param_config(UART_NUM_0, &uart_config);
+//     uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);
+
+//     //xTaskCreatePinnedToCore(main_loop, "MainLoop", 4096, NULL, 1, NULL, 0);
+//     main_loop();
+
+//     /*
+//     ESPCamera::get_frame(frame);
+
+//     for (int y = 0; y < frame.rows; y++) {
+//         for (int x = 0; x < frame.cols; x++) {
+//             std::string pixel = std::bitset<16>(frame.at<uint16_t>(y,x)).to_string() + " ";
+//             uart_write_bytes(UART_NUM, pixel.c_str(), pixel.size());
+//         }
+//     }*/
+
+// }

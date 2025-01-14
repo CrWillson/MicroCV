@@ -6,6 +6,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <map>
+#include <string>
 
 constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_t BR_X, const uint8_t BR_Y) {
     if (BR_X >= TL_X && BR_Y >= TL_Y) {
@@ -16,45 +18,45 @@ constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_
 
 // 16 Total parameters to calibrate
 
-namespace PARAMS {
+struct PARAMS {
 
-    // General constants
-    extern uint8_t IMG_ROWS;
-    extern uint8_t IMG_COLS;
+    static std::map<std::string, uint16_t> params;
+    static auto& getParams() { return params; }
+    // // General constants
+    // static uint8_t IMG_ROWS;
+    // static uint8_t IMG_COLS;
 
-    // Stop line constants
-    extern uint8_t STOPBOX_TL_X;
-    extern uint8_t STOPBOX_TL_Y;
-    extern uint8_t STOPBOX_BR_X;
-    extern uint8_t STOPBOX_BR_Y;
-    extern uint16_t STOPBOX_AREA;
+    // // Stop line constants
+    // static uint8_t STOPBOX_TL_X;
+    // static uint8_t STOPBOX_TL_Y;
+    // static uint8_t STOPBOX_BR_X;
+    // static uint8_t STOPBOX_BR_Y;
+    // static uint16_t STOPBOX_AREA;
 
-    extern uint8_t PERCENT_TO_STOP;
-    extern uint8_t STOP_GREEN_TOLERANCE;
-    extern uint8_t STOP_BLUE_TOLERANCE;
+    // static uint8_t PERCENT_TO_STOP;
+    // static uint8_t STOP_GREEN_TOLERANCE;
+    // static uint8_t STOP_BLUE_TOLERANCE;
 
+    // // White line constants
+    // static uint8_t WHITELINE_CROP;
+    // static uint8_t WHITE_RED_THRESH;
+    // static uint8_t WHITE_GREEN_THRESH;
+    // static uint8_t WHITE_BLUE_THRESH;
+    // static uint16_t WHITE_MIN_SIZE;
+    // static uint8_t WHITE_CENTER_POS;
 
-    // White line constants
-    extern uint8_t WHITELINE_CROP;
-    extern uint8_t WHITE_RED_THRESH;
-    extern uint8_t WHITE_GREEN_THRESH;
-    extern uint8_t WHITE_BLUE_THRESH;
-    extern uint16_t WHITE_MIN_SIZE;
-    extern uint8_t WHITE_CENTER_POS;
+    // // Car detect constants
+    // static uint8_t CARBOX_TL_X;
+    // static uint8_t CARBOX_TL_Y;
+    // static uint8_t CARBOX_BR_X;
+    // static uint8_t CARBOX_BR_Y;
+    // static uint16_t CARBOX_AREA;
 
+    // static uint8_t PERCENT_TO_CAR;
+    // static uint8_t CAR_RED_TOLERANCE;
+    // static uint8_t CAR_BLUE_TOLERANCE;
 
-    // Car detect constants
-    extern uint8_t CARBOX_TL_X;
-    extern uint8_t CARBOX_TL_Y;
-    extern uint8_t CARBOX_BR_X;
-    extern uint8_t CARBOX_BR_Y;
-    extern uint16_t CARBOX_AREA;
-
-    extern uint8_t PERCENT_TO_CAR;
-    extern uint8_t CAR_RED_TOLERANCE;
-    extern uint8_t CAR_BLUE_TOLERANCE;
-
-}
+};
 
 
 /*

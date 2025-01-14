@@ -14,15 +14,18 @@
 #include "constants.hpp"
 #include "params.hpp"
 
+
 namespace SDCard {
 
-    static constexpr char* MOUNT_POINT  = "/sdcard";
-    static constexpr char* PARAMS_FILE  = "/sdcard/PARAMS.TXT";
-    static constexpr char* TAG          = "SDCARD";
+    static constexpr const char* MOUNT_POINT  = "/sdcard";
+    static constexpr const char* PARAMS_FILE  = "/sdcard/PARAMS.TXT";
+    static constexpr const char* TAG          = "SDCARD";
 
-    esp_err_t mount_sd_card();
+    esp_err_t mount_sd_card(sdmmc_card_t** card);
 
     esp_err_t load_params_from_file();
+
+    esp_err_t dismount_sd_card(sdmmc_card_t* card);
 
 
 }
