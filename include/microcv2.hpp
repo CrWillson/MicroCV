@@ -1,11 +1,8 @@
 #pragma once
 
 // Opencv Imports
-#undef EPS
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#define EPS 192
+#include "opencv2.hpp"
+
 
 #include "params.h"
 #include "constants.hpp"
@@ -30,5 +27,7 @@ namespace MicroCV2 {
     bool processCarImg(const cv::Mat& img, cv::Mat1b& mask);
 
     bool processWhiteImg(const cv::Mat& img, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist, int8_t& height);
+
+    // bool maskAllColors(const cv::Mat& img, cv::Mat1b& redMask, uint16_t& rCount, cv::Mat1b& whiteMask, uint16_t& wCount);
 
 }

@@ -7,13 +7,8 @@
 #pragma once
 
 #include <stdint.h>
+#include "opencv2.hpp"
 
-// Opencv Imports
-#undef EPS
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#define EPS 192
 
 constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_t BR_X, const uint8_t BR_Y) {
     if (BR_X >= TL_X && BR_Y >= TL_Y) {
@@ -22,7 +17,15 @@ constexpr uint16_t BOX_AREA(const uint8_t TL_X, const uint8_t TL_Y, const uint8_
     return 0;
 }
 
-// 16 Total parameters to calibrate
+constexpr uint8_t CLAMP_CENTER_POS(const uint8_t IMG_COLS, const uint8_t WHITE_CENTER_POS) {
+    if (IMG_COLS > 2*WHITE_CENTER_POS) {
+        // On left side of image
+        return WHITE_CENTER_POS;
+    } else {
+        // On right side of image
+        return IMG_COLS - WHITE_CENTER_POS;
+    }
+}
 
 // General constants
 constexpr uint8_t IMG_ROWS = 96;
@@ -45,11 +48,12 @@ constexpr uint8_t STOP_BLUE_TOLERANCE   = 30;
 
 // White line constants
 constexpr uint8_t WHITELINE_CROP        = 50;
-constexpr uint8_t WHITE_RED_THRESH      = 160;
+constexpr uint8_t WHITE_RED_THRESH      = 170;
 constexpr uint8_t WHITE_GREEN_THRESH    = 170;
 constexpr uint8_t WHITE_BLUE_THRESH     = 100;
 constexpr uint16_t WHITE_MIN_SIZE       = 40;
-constexpr uint8_t WHITE_CENTER_POS      = 42;
+constexpr uint8_t WHITE_CENTER_POS      = 28; // 42;
+constexpr uint8_t MAX_WHITE_DIST = CLAMP_CENTER_POS(IMG_COLS, WHITE_CENTER_POS);
 
 
 // Car detect constants
@@ -61,8 +65,6 @@ constexpr uint8_t CARBOX_BR_Y           = 70;
 const cv::Point2i CARBOX_TL(CARBOX_TL_X,CARBOX_TL_Y);
 const cv::Point2i CARBOX_BR(CARBOX_BR_X,CARBOX_BR_Y);
 constexpr uint16_t CARBOX_AREA = BOX_AREA(CARBOX_TL_X, CARBOX_TL_Y, CARBOX_BR_X, CARBOX_BR_Y);
-
-
 
 constexpr uint8_t PERCENT_TO_CAR        = 10;
 constexpr uint8_t CAR_RED_TOLERANCE     = 50;

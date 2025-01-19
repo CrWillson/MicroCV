@@ -1,8 +1,6 @@
 #pragma once
 
-#undef EPS
-#include "opencv2/core.hpp"
-#define EPS 192
+#include "opencv2.hpp"
 
 #include <stdint.h>
 #include "freertos/FreeRTOS.h"
