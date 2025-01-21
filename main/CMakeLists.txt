@@ -16,6 +16,7 @@ idf_component_register(
         spiffs
         fatfs
         sdmmc
+        esp_timer
 )
             
 add_prebuilt_library(opencv_imgcodecs "opencv/libopencv_imgcodecs.a")

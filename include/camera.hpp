@@ -12,7 +12,7 @@
 
 namespace ESPCamera {
     
-    constexpr char *TAG = "CAMERA";
+    constexpr const char *TAG = "CAMERA";
 
     /// @brief Configures the ESP-32-CAM.
     void config_cam();

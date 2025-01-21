@@ -2,7 +2,9 @@
 
 /// @brief Configures the ESP-32-CAM.
 void ESPCamera::config_cam()
-{    
+{   
+    ESP_LOGI(ESPCamera::TAG, "Beginning camera configuration");
+ 
     camera_config_t config;
     config.ledc_channel = LEDC_CHANNEL_0;
     config.ledc_timer = LEDC_TIMER_0;
