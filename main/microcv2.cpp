@@ -18,6 +18,28 @@ void MicroCV2::cropImage(cv::Mat& image, const cv::Point2i& BOX_TL, const cv::Po
     image.setTo(cv::Scalar(0), ~mask);
 }
 
+// bool MicroCV2::maskAllColors(const cv::Mat& image, cv::Mat1b& redMask, uint16_t& rCount, cv::Mat1b& whiteMask, uint16_t& wCount)
+// {
+//     redMask = cv::Mat::zeros(image.size(), CV_8UC1);
+//     whiteMask = cv::Mat::zeros(image.size(), CV_8UC1);
+
+//     for (uint8_t y = 0; y < image.rows; ++y) {
+//         for (uint8_t x = 0; x < image.cols; ++x) {
+//             uint16_t pixel = (image.at<cv::Vec2b>(y,x)[1] << 8) | image.at<cv::Vec2b>(y,x)[0];
+
+//             uint16_t red, green, blue;
+//             RGB565toRGB888(pixel, red, green, blue);
+
+//             if (red >= green + STOP_GREEN_TOLERANCE && red >= blue + STOP_BLUE_TOLERANCE) {
+//                 if (x >= STOPBOX_TL.x && x <= STOPBOX_BR.x && y >= STOPBOX_TL.y && y <= STOPBOX_BR.y) {
+//                     rCount++;
+//                 }
+//                 redMask.at<uchar>(y,x) = 255;
+//             }
+//         }
+//     }
+// }
+
 bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
 {
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
@@ -34,6 +56,10 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
                 if (x >= STOPBOX_TL.x && x <= STOPBOX_BR.x && y >= STOPBOX_TL.y && y <= STOPBOX_BR.y) {
                     redCount++;
                 }
+                mask.at<uchar>(y,x) = 255;
+            }
+
+            if (red >= WHITE_RED_THRESH && green >= WHITE_GREEN_THRESH && blue >= WHITE_BLUE_THRESH) {
                 mask.at<uchar>(y,x) = 255;
             }
         }
@@ -111,9 +137,25 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     dist = boundingBox.x + boundingBox.width / 2;
     height = boundingBox.y + boundingBox.height / 2;
 
+    cv::Point topmost_leftmost = contours[maxInd][0];
+
+    // Iterate through the contour to find the topmost-leftmost point
+    for (const auto& point : contours[maxInd]) {
+        if (point.y < topmost_leftmost.y || 
+            (point.y == topmost_leftmost.y && point.x < topmost_leftmost.x)) {
+            topmost_leftmost = point;
+        }
+    }
+    dist = topmost_leftmost.x;
+    height = topmost_leftmost.y;
+
     cv::line(centerLine, cv::Point(dist, 0), cv::Point(dist, mask.rows - 1), cv::Scalar(255), 1);
     cv::line(centerLine, cv::Point(0, height), cv::Point(mask.cols - 1, height), cv::Scalar(255), 1);
+    
     dist -= WHITE_CENTER_POS;
+
+    if (dist > MAX_WHITE_DIST) dist = MAX_WHITE_DIST;
+    if (dist < -MAX_WHITE_DIST) dist = -MAX_WHITE_DIST;
 
     return true;
 }
