@@ -2,14 +2,14 @@
 
 int curr_row = 0;
 
-void LCD::lcd_draw_string(SSD1306_t* screen, std::string& string, int row)
+void LCD::lcd_draw_string(SSD1306_t& screen, std::string& string, int row)
 {
     if (-1 == row)
     {
         row = curr_row;
     }
 
-    ssd1306_display_text(screen, row, string.data(), string.size(), false);
+    ssd1306_display_text(&screen, row, string.data(), string.size(), false);
     curr_row = row + 1;
 }
 
@@ -17,7 +17,7 @@ void LCD::lcd_draw_string(SSD1306_t* screen, std::string& string, int row)
 /// @brief Writes a parameter to the LCD screen.
 /// @param screen The screen to write to.
 /// @param lines The lines to write to the screen.
-void LCD::lcd_draw_string(SSD1306_t* screen, std::vector<std::string>& lines, int start_row)
+void LCD::lcd_draw_string(SSD1306_t& screen, std::vector<std::string>& lines, int start_row)
 {
     if (-1 == start_row)
     {
@@ -33,13 +33,13 @@ void LCD::lcd_draw_string(SSD1306_t* screen, std::vector<std::string>& lines, in
 }
 
 
-void LCD::lcd_draw_data(SSD1306_t* screen, std::string preamble, int data, int row)
+void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, int data, int row)
 {
     std::string arg = preamble + " " + std::to_string(data);
     lcd_draw_string(screen, arg, row);
 }
 
-void LCD::lcd_draw_data(SSD1306_t* screen, std::string preamble, double data, int row)
+void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, double data, int row)
 {
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(1) << data;
@@ -47,7 +47,7 @@ void LCD::lcd_draw_data(SSD1306_t* screen, std::string preamble, double data, in
     lcd_draw_string(screen, arg, row);
 }
 
-void LCD::lcd_draw_data(SSD1306_t* screen, std::string preamble, bool data, int row)
+void LCD::lcd_draw_data(SSD1306_t& screen, std::string preamble, bool data, int row)
 {
     std::string arg = preamble + " " + (data ? "t" : "f");
     lcd_draw_string(screen, arg, row);
@@ -59,7 +59,7 @@ void LCD::lcd_draw_data(SSD1306_t* screen, std::string preamble, bool data, int 
 /// @brief Writes a binary matrix to a provided LCD screen.
 /// @param screen The LCD screen to write to.
 /// @param bin_mat The binary matrix to write.
-void LCD::lcd_draw_matrix(SSD1306_t* screen, const cv::Mat& bin_mat)
+void LCD::lcd_draw_matrix(SSD1306_t& screen, const cv::Mat& bin_mat)
 {
     curr_row = 0;
     for (uint8_t row = 0; row < bin_mat.rows; row++)
@@ -67,35 +67,34 @@ void LCD::lcd_draw_matrix(SSD1306_t* screen, const cv::Mat& bin_mat)
         for (uint8_t col = 0; col < bin_mat.cols; col++)
         {
             const bool invert = (0 == bin_mat.at<uint8_t>(row, col));
-            _ssd1306_pixel(screen, col, row, invert);
+            _ssd1306_pixel(&screen, col, row, invert);
         }
     }
-    ssd1306_show_buffer(screen);
+    ssd1306_show_buffer(&screen);
 }
 
 
 /// @brief Prints data about the detection process to the LCD screen.
 /// @param screen The screen to print to.
 /// @param params A struct containing values to print to the screen.
-void LCD::output_to_screen(PrintParams* params)
+void LCD::output_to_screen(SSD1306_t& screen, PrintParams params)
 {
     try {
         screenMutex.lock();
 
-        cv::resize(params->frame, params->frame, cv::Size(LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT));
-        LCD::lcd_draw_matrix(params->screen, params->frame);
+        cv::resize(params.frame, params.frame, cv::Size(LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT));
+        LCD::lcd_draw_matrix(screen, params.frame);
 
         // Calculate the FPS.
         // const auto delta_ticks = xTaskGetTickCount() - params.start_tick;
         //const auto framerate = static_cast<double>(configTICK_RATE_HZ) / params->loop_ticks; // How many seconds it took to process a frame.
-        const double framerate = 1000000.0 / params->loop_ticks;
+        const double framerate = 1000000.0 / params.loop_ticks;
 
-        LCD::lcd_draw_data(params->screen, "Stop:", params->stop_detected);
-        LCD::lcd_draw_data(params->screen, "White:", params->car_detected);
-        LCD::lcd_draw_data(params->screen, "Dist:", params->dist);
-        LCD::lcd_draw_data(params->screen, "FR:", framerate);
+        LCD::lcd_draw_data(screen, "Stop:", params.stop_detected);
+        LCD::lcd_draw_data(screen, "White:", params.car_detected);
+        LCD::lcd_draw_data(screen, "Dist:", params.dist);
+        LCD::lcd_draw_data(screen, "FR:", framerate);
 
-        delete params;
     } catch (const std::exception& e) {
         ESP_LOGE(TAG, "Exception from output_to_screen(): %s", e.what());
     } 

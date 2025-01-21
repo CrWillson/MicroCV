@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <format>
 #include <bitset>
+#include <thread>
 
 
 // Esp imports
@@ -14,11 +15,11 @@
 #include <esp_log.h>
 #include "sdkconfig.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
 
 // FreeRTOS imports
-
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/portmacro.h"
@@ -27,7 +28,6 @@
 // In-project imports
 #include "camera.hpp"
 #include "lcd.hpp"
-//#include "microcv.hpp"
 #include "microcv2.hpp"
 
 
@@ -37,16 +37,8 @@ extern "C" {
 void app_main(void);
 }
 
-
-// Global variables
-camera_fb_t* fb = nullptr;
-cv::Mat frame;
-int8_t dist = 0;
-int8_t height = 0;
-uint8_t drawCount = 0;
-
-SSD1306_t screen; // The screen device struct.
-
+// Global variable for the screen object
+SSD1306_t screen;
 
 // Function to pack an int8_t and two bools into a 10-bit integer
 uint16_t packValues(int8_t num, bool b1, bool b2) {
@@ -62,10 +54,13 @@ uint16_t packValues(int8_t num, bool b1, bool b2) {
 /// @brief The main driver loop.
 inline void main_loop(void* params = nullptr)
 {
+    cv::Mat frame;
+    int8_t dist = 0;
+    int8_t height = 0;
+    int64_t prevTick = 0;
+
     while (true)
     {
-        const auto start_tick = xTaskGetTickCount();
-
         bool result = ESPCamera::get_frame(frame);
         if (result != ESP_OK) {
             vTaskDelay(1);
@@ -79,50 +74,39 @@ inline void main_loop(void* params = nullptr)
         cv::Mat1b whiteLine;
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
-        cv::Mat1b carMask;
-        bool carDetected = MicroCV2::processCarImg(frame, carMask);
-        
-        if (drawCount % 2 == 0) {
-            LCD::PrintParams params;
-            params.start_tick = start_tick;
-            params.frame = whiteLine | whiteMask | redMask | carMask;
-            params.dist = dist;
-            params.height = height;
-            params.stop_detected = stopDetected;
-            params.car_detected = carDetected;
-            LCD::output_to_screen(screen, params);
-        }
-        drawCount++;
+        // cv::Mat1b carMask;
+        // bool carDetected = MicroCV2::processCarImg(frame, carMask);
+    
 
-        auto packedByte = packValues(dist, stopDetected, carDetected);
+        auto packedByte = packValues(dist, stopDetected, whiteDetected);
         std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         printf(byteString.c_str());
 
 
-        /*
-        // Write to the screen.
-        LCD::PrintParams params;
-        params.start_tick = start_tick;
-        params.frame = outside_thresh | stop_thresh;
-        params.outside_dist_from_ideal = outside_dist_from_ideal;
-        params.outside_line_slope = outside_line_slope;
-        params.stop_detected = detected;
-        LCD::output_to_screen(screen, params);
+        int64_t currTick = esp_timer_get_time();
+        int64_t loop_ticks = currTick - prevTick;
+        prevTick = currTick;
 
-        #if PRINT_COMBINED_THRESH == 1
-        MicroCV::debug::print_thresh(params.frame);
-        #endif
+        if (LCD::screenMutex.try_lock()) {
+            LCD::screenMutex.unlock();
 
-        // Write to TX.
-        //auto dist_string = std::to_string(outside_dist_from_ideal);
-        //uart_write_bytes(UART_NUM, "D", 1);
-        //uart_write_bytes(UART_NUM, dist_string.data(), dist_string.size());
-        //uart_write_bytes(UART_NUM, "E", 1);
+            LCD::PrintParams params;
+            params.loop_ticks = loop_ticks;
+            params.frame = whiteLine | whiteMask | redMask;
+            params.dist = dist;
+            params.height = height;
+            params.stop_detected = stopDetected;
+            params.car_detected = whiteDetected;
 
-        constexpr short data = 0x69;
-        printf("%x\n", data);
-        */
+            std::thread([&]() {
+                LCD::output_to_screen(screen, params);
+            }).detach();
+            //LCD::output_to_screen(screen, params);
+        } else {
+            ESP_LOGI(LCD::TAG, "Screen busy, skipping frame.");
+        }
+
         vTaskDelay(1);
     }
 }
@@ -137,6 +121,8 @@ void app_main(void)
     ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
 
     // Init tx pin
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
     uart_config_t uart_config = {
         .baud_rate = tx_baud,
         .data_bits = UART_DATA_8_BITS,
@@ -144,20 +130,10 @@ void app_main(void)
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
     };
+    #pragma GCC diagnostic pop
+
     uart_param_config(UART_NUM_0, &uart_config);
     uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);
 
-    //xTaskCreatePinnedToCore(main_loop, "MainLoop", 4096, NULL, 1, NULL, 0);
     main_loop();
-
-    /*
-    ESPCamera::get_frame(frame);
-
-    for (int y = 0; y < frame.rows; y++) {
-        for (int x = 0; x < frame.cols; x++) {
-            std::string pixel = std::bitset<16>(frame.at<uint16_t>(y,x)).to_string() + " ";
-            uart_write_bytes(UART_NUM, pixel.c_str(), pixel.size());
-        }
-    }*/
-
 }
