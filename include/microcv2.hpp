@@ -6,18 +6,25 @@
 
 #include "params.h"
 #include "constants.hpp"
+#include "esp_log.h"
 #include "driver/uart.h"
 
 using contour_t = std::vector<cv::Point2i>;
 
 namespace MicroCV2 {
 
-    void RGB565toRGB888(uint16_t pixel, uint16_t& red, uint16_t& blue, uint16_t& green);
+    constexpr const char *TAG = "MICROCV";
+
+    void RGB565toRGB888(const uint16_t pixel, uint16_t& red, uint16_t& green, uint16_t& blue);
 
     /**
      * Set all pixels outside the specified box to (0,0,0)
      */
     void cropImage(cv::Mat& image, const cv::Point2i& BOX_TL, const cv::Point2i& BOX_BR);
+
+    bool isStopLine(const uint16_t red, const uint16_t green, const uint16_t blue);
+
+    bool isWhiteLine(const uint16_t red, const uint16_t green, const uint16_t blue);
 
     /**
      * Return true if the stop line is detected

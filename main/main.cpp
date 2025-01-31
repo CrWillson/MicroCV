@@ -54,10 +54,15 @@ uint16_t packValues(int8_t num, bool b1, bool b2) {
 /// @brief The main driver loop.
 inline void main_loop(void* params = nullptr)
 {
-    cv::Mat frame;
+    cv::Mat frame = cv::Mat::zeros(96, 96, CV_8UC2);
     int8_t dist = 0;
     int8_t height = 0;
     int64_t prevTick = 0;
+
+    cv::Mat1b redMask = cv::Mat::zeros(frame.size(), CV_8UC1);
+    cv::Mat1b carMask = cv::Mat::zeros(frame.size(), CV_8UC1);
+    cv::Mat1b whiteMask = cv::Mat::zeros(frame.size(), CV_8UC1);
+    cv::Mat1b whiteLine = cv::Mat::zeros(frame.size(), CV_8UC1);
 
     while (true)
     {
@@ -67,18 +72,13 @@ inline void main_loop(void* params = nullptr)
             continue;
         }
         
-        cv::Mat1b redMask;
+        bool carDetected = MicroCV2::processCarImg(frame, carMask);
+
         bool stopDetected = MicroCV2::processRedImg(frame, redMask);
 
-        cv::Mat1b whiteMask;
-        cv::Mat1b whiteLine;
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
-        // cv::Mat1b carMask;
-        // bool carDetected = MicroCV2::processCarImg(frame, carMask);
-    
-
-        auto packedByte = packValues(dist, stopDetected, whiteDetected);
+        auto packedByte = packValues(dist, stopDetected, carDetected);
         std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         printf(byteString.c_str());
@@ -88,24 +88,15 @@ inline void main_loop(void* params = nullptr)
         int64_t loop_ticks = currTick - prevTick;
         prevTick = currTick;
 
-        if (LCD::screenMutex.try_lock()) {
-            LCD::screenMutex.unlock();
+        LCD::PrintParams params;
+        params.loop_ticks = loop_ticks;
+        params.frame = redMask | whiteLine | whiteMask;
+        params.dist = dist;
+        params.height = height;
+        params.stop_detected = stopDetected;
+        params.car_detected = carDetected;
 
-            LCD::PrintParams params;
-            params.loop_ticks = loop_ticks;
-            params.frame = whiteLine | whiteMask | redMask;
-            params.dist = dist;
-            params.height = height;
-            params.stop_detected = stopDetected;
-            params.car_detected = whiteDetected;
-
-            std::thread([&]() {
-                LCD::output_to_screen(screen, params);
-            }).detach();
-            //LCD::output_to_screen(screen, params);
-        } else {
-            ESP_LOGI(LCD::TAG, "Screen busy, skipping frame.");
-        }
+        LCD::output_to_screen(screen, params);
 
         vTaskDelay(1);
     }
