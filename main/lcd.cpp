@@ -79,25 +79,38 @@ void LCD::lcd_draw_matrix(SSD1306_t& screen, const cv::Mat& bin_mat)
 /// @param params A struct containing values to print to the screen.
 void LCD::output_to_screen(SSD1306_t& screen, PrintParams params)
 {
-    try {
-        screenMutex.lock();
+    cv::resize(params.frame, params.frame, cv::Size(LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT));
 
-        cv::resize(params.frame, params.frame, cv::Size(LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT));
-        LCD::lcd_draw_matrix(screen, params.frame);
+    std::ostringstream frStr;
+    const double framerate = 1000000.0 / params.loop_ticks;
+    frStr << "FR: " << std::setprecision(3) << framerate;
+    std::ostringstream stStr;
+    stStr << "Stop: " << (params.stop_detected ? "T" : "F");
+    std::ostringstream distStr;
+    distStr << "Dist: " << (int)params.dist;
 
-        // Calculate the FPS.
-        // const auto delta_ticks = xTaskGetTickCount() - params.start_tick;
-        //const auto framerate = static_cast<double>(configTICK_RATE_HZ) / params->loop_ticks; // How many seconds it took to process a frame.
-        const double framerate = 1000000.0 / params.loop_ticks;
+    std::vector<std::string> lines = {distStr.str(), stStr.str(), frStr.str()};
+    int baseline = 0;
+    cv::Size textSize;
+    auto origin = cv::Point(35,8);
+    int yOffset = origin.y;
 
-        LCD::lcd_draw_data(screen, "Stop:", params.stop_detected);
-        LCD::lcd_draw_data(screen, "White:", params.car_detected);
-        LCD::lcd_draw_data(screen, "Dist:", params.dist);
-        LCD::lcd_draw_data(screen, "FR:", framerate);
+    auto font = cv::FONT_HERSHEY_PLAIN;
+    float fontScale = 0.7;
+    int fontThick = 1;
+    int lineSpacing = 2;
 
-    } catch (const std::exception& e) {
-        ESP_LOGE(TAG, "Exception from output_to_screen(): %s", e.what());
-    } 
+    for (const auto& line : lines) {
+        textSize = cv::getTextSize(line, font, fontScale, fontThick, &baseline);
 
-    if (!screenMutex.try_lock()) screenMutex.unlock();
+        cv::rectangle(params.frame, 
+                        cv::Point(origin.x, yOffset - textSize.height),
+                        cv::Point(origin.x + textSize.width, yOffset + baseline),
+                        cv::Scalar(0), cv::FILLED);
+        
+        cv::putText(params.frame, line, cv::Point(origin.x, yOffset), font, fontScale, cv::Scalar(255), fontThick);
+        yOffset += textSize.height + lineSpacing;
+    }
+
+    LCD::lcd_draw_matrix(screen, params.frame);
 }
