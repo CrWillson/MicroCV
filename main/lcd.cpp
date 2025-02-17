@@ -84,12 +84,12 @@ void LCD::output_to_screen(SSD1306_t& screen, PrintParams params)
     std::ostringstream frStr;
     const double framerate = 1000000.0 / params.loop_ticks;
     frStr << "FR: " << std::setprecision(3) << framerate;
-    std::ostringstream stStr;
-    stStr << "Stop: " << (params.stop_detected ? "T" : "F");
-    std::ostringstream distStr;
-    distStr << "Dist: " << (int)params.dist;
+    // std::ostringstream stStr;
+    // stStr << "Stop: " << (params.stop_detected ? "T" : "F");
+    // std::ostringstream distStr;
+    // distStr << "Dist: " << (int)params.dist;
 
-    std::vector<std::string> lines = {distStr.str(), stStr.str(), frStr.str()};
+    std::vector<std::string> lines = {frStr.str()};
     int baseline = 0;
     cv::Size textSize;
     auto origin = cv::Point(35,8);
