@@ -43,41 +43,6 @@ void ESPCamera::config_cam()
 }
 
 
-cv::Mat ESPCamera::get_frame(camera_fb_t** fb_p)
-{
-    // If a previous picture has been taken, give the frame-buffer back.
-    if (*fb_p != nullptr)
-    {
-        esp_camera_fb_return(*fb_p);
-    }
-
-    // Take the picture.
-    *fb_p = esp_camera_fb_get();
-    auto fb = *fb_p;
-    if (!fb) {
-        ESP_LOGE(ESPCamera::TAG, "Camera capture failed");
-        return cv::Mat();
-    }
-
-    // Build the OpenCV matrix.
-    // CV_8UC2 is two-channel color, with 8-bit channels.
-    auto result = cv::Mat(fb->height, fb->width, CV_8UC2, fb->buf);
-
-    // Flip the bytes of the matrix so that it can be processed using OpenCV functions.
-    /*for (auto row = 0; row < result.rows; row++)
-    {
-        for (auto col = 0; col < result.cols; col++)
-        {
-            auto& pixel = result.at<cv::Vec2b>(row, col);
-            const auto temp = pixel[0];
-            pixel[0] = pixel[1];
-            pixel[1] = temp;
-        }
-    }*/
-
-    return result;
-}
-
 esp_err_t ESPCamera::get_frame(cv::Mat& image)
 {
     auto* fb = esp_camera_fb_get();
@@ -86,105 +51,35 @@ esp_err_t ESPCamera::get_frame(cv::Mat& image)
         return ESP_FAIL;
     }
 
-    image.create(fb->height, fb->width, CV_8UC2);
-    memcpy(image.data, fb->buf, fb->len);
-
-    for (auto row = 0; row < image.rows; row++)
-    {
-        for (auto col = 0; col < image.cols; col++)
-        {
-            auto& pixel = image.at<cv::Vec2b>(row, col);
-            const auto temp = pixel[0];
-            pixel[0] = pixel[1];
-            pixel[1] = temp;
-        }
+    // Ensure the format is RGB565
+    if (fb->format != PIXFORMAT_RGB565) {
+        ESP_LOGE(TAG, "Unsupported format. Expected RGB565.");
+        esp_camera_fb_return(fb);
+        return ESP_FAIL;
     }
 
-    esp_camera_fb_return(fb);
-    //ESP_LOGI(TAG, "Image captured successfully: %dx%d", image.cols, image.rows);
+    int width = fb->width;
+    int height = fb->height;
 
+    image.create(height, width, CV_8UC2);
+    memcpy(image.data, fb->buf, fb->len);
+
+    esp_camera_fb_return(fb);
     return ESP_OK;
 }
 
+#ifdef DEBUG_MODE
 void ESPCamera::debug::print_matrix(const cv::Mat& mat) 
 {
-    #ifdef DEBUG_MODE
-    // Begin transmission
-    printf("START"); // Start of transmission
-
-    printf("%04x", mat.rows);
-    printf("%04x", mat.cols);
-    printf("%04x", mat.channels());
-
-    // Transmit what type of frame this is, of the common ones used in this app.
-    const auto type = mat.type();
-
-    // RGB585
-    if (CV_8UC2 == type)
-    {
-        printf("CV_8UC2");
-    }
-    // Binary-mask
-    else if (CV_8UC1 == type)
-    {
-        printf("CV_8UC1");
-    }
-    else if (CV_8U == type)
-    {
-        printf("CV_8U__");
-    }
-    // HSV
-    else if (CV_8UC3 == type)
-    {
-        printf("CV_8UC3");
-    }
-
-    // Transmit the data of the frame.
-    if (CV_8UC2 == type)
-    {
-        for (int row = 0; row < mat.rows; row++) 
-        {
-            for (int col = 0; col < mat.cols; col++)
-            {
-                const auto& pixel = mat.at<cv::Vec2b>(row, col);
-
-                for (int channel = 0; channel < pixel.channels; channel++)
-                {
-                    printf("%02x", pixel[channel]);
-                }
-            }
-            vTaskDelay(1); // To avoid the watchdog on especially large matrices.
+    printf("START IMAGE\n");
+    for (int i = 0; i < mat.rows; ++i) {
+        for (int j = 0; j < mat.cols; ++j) {
+            cv::Vec2b vecpixel = mat.at<cv::Vec2b>(i, j);
+            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
+            printf("%d ", pixel);
         }
+        printf("\n");
     }
-    else if (CV_8U == type || CV_8UC1 == type)
-    {
-        for (int row = 0; row < mat.rows; row++) 
-        {
-            for (int col = 0; col < mat.cols; col++)
-            {
-                printf("%02x", mat.at<uint8_t>(row, col));
-            }
-            vTaskDelay(1); // To avoid the watchdog on especially large matrices.
-        }
-    }
-    else if (CV_8UC3 == type)
-    {
-        for (int row = 0; row < mat.rows; row++)
-        {
-            for (int col = 0; col < mat.cols; col++)
-            {
-                const auto pixel = mat.at<cv::Vec3b>(row, col);
-
-                for (int channel = 0; channel < pixel.channels; channel++)
-                {
-                    printf("%02x", pixel[channel]);
-                }
-            }
-        }
-    }
-
-    // End transmission and flush
-    printf("E\n");
-    fflush(stdout);
-    #endif
+    printf("END IMAGE\n");
 }
+#endif

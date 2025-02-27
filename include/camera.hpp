@@ -17,11 +17,11 @@ namespace ESPCamera {
     /// @brief Configures the ESP-32-CAM.
     void config_cam();
 
-    cv::Mat get_frame(camera_fb_t** fb_p);
-
     esp_err_t get_frame(cv::Mat& image);
 
+#ifdef DEBUG_MODE
     namespace debug {
         void print_matrix(const cv::Mat& mat);
     }
+#endif
 }

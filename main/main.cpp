@@ -8,11 +8,11 @@
 #include <bitset>
 #include <thread>
 
-
 // Esp imports
 #include <esp_err.h>
 #include <esp_spiffs.h>
 #include <esp_log.h>
+#include "constants.hpp"
 #include "sdkconfig.h"
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -24,10 +24,10 @@
 #include "freertos/task.h"
 #include "freertos/portmacro.h"
 
-
 // In-project imports
 #include "camera.hpp"
 #include "lcd.hpp"
+#include "pipico.hpp"
 #include "microcv2.hpp"
 
 
@@ -55,6 +55,8 @@ uint16_t packValues(int8_t num, bool b1, bool b2) {
 inline void main_loop(void* params = nullptr)
 {
     cv::Mat frame = cv::Mat::zeros(96, 96, CV_8UC2);
+
+#ifndef DEBUG_MODE
     int8_t dist = 0;
     int8_t height = 0;
     int64_t prevTick = 0;
@@ -63,16 +65,27 @@ inline void main_loop(void* params = nullptr)
     cv::Mat1b carMask = cv::Mat::zeros(frame.size(), CV_8UC1);
     cv::Mat1b whiteMask = cv::Mat::zeros(frame.size(), CV_8UC1);
     cv::Mat1b whiteLine = cv::Mat::zeros(frame.size(), CV_8UC1);
+#endif
 
     while (true)
     {
+
         bool result = ESPCamera::get_frame(frame);
         if (result != ESP_OK) {
             vTaskDelay(1);
             continue;
         }
-        
-        bool carDetected = MicroCV2::processCarImg(frame, carMask);
+
+        // uint8_t data[2];
+        // printf("Waiting for 2 bytes...\n");
+        // int len = uart_read_bytes(UART_NUM, data, sizeof(data), 20 / portTICK_PERIOD_MS);
+        // if (len > 0) {
+        //     printf("Received: %d %d\n", data[0], data[1]);
+        // }
+        // vTaskDelay(1);
+
+        // bool carDetected = MicroCV2::processCarImg(frame, carMask);
+        bool carDetected = false;
 
         bool stopDetected = MicroCV2::processRedImg(frame, redMask);
 
@@ -82,7 +95,6 @@ inline void main_loop(void* params = nullptr)
         std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         printf(byteString.c_str());
-
 
         int64_t currTick = esp_timer_get_time();
         int64_t loop_ticks = currTick - prevTick;
@@ -112,16 +124,16 @@ void app_main(void)
     ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
 
     // Init tx pin
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
     uart_config_t uart_config = {
-        .baud_rate = tx_baud,
+        .baud_rate = UART_TX_BAUD,
         .data_bits = UART_DATA_8_BITS,
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
     };
-    #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 
     uart_param_config(UART_NUM_0, &uart_config);
     uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);

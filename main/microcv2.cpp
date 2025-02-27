@@ -63,7 +63,8 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
     uint16_t redCount = 0;
     for (uint8_t y = 0; y < image.rows; ++y) {
         for (uint8_t x = 0; x < image.cols; ++x) {
-            uint16_t pixel = image.at<uint16_t>(y,x);
+            cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
+            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
 
             uint16_t red, green, blue;
             RGB565toRGB888(pixel, red, green, blue);
@@ -90,7 +91,8 @@ bool MicroCV2::processCarImg(const cv::Mat &image, cv::Mat1b &mask)
     uint16_t carCount = 0;
     for (uint8_t y = 0; y < image.rows; ++y) {
         for (uint8_t x = 0; x < image.cols; ++x) {
-            uint16_t pixel = image.at<uint16_t>(y,x);
+            cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
+            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
 
             uint16_t red, green, blue;
             RGB565toRGB888(pixel, red, green, blue);
@@ -117,7 +119,8 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
 
     for (uint8_t y = WHITE_VERTICAL_CROP; y < image.rows; ++y) {
         for (uint8_t x = 0; x < WHITE_HORIZONTAL_CROP; ++x) {
-            uint16_t pixel = image.at<uint16_t>(y,x);
+            cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
+            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
 
             uint16_t red, green, blue;
             RGB565toRGB888(pixel, red, green, blue);
