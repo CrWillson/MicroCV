@@ -57,7 +57,6 @@ inline void main_loop(void* params = nullptr)
     cv::Mat frame = cv::Mat::zeros(96, 96, CV_8UC2);
     auto& pico = PiPico::getInstance();
 
-#ifndef DEBUG_MODE
     int8_t dist = 0;
     int8_t height = 0;
     int64_t prevTick = 0;
@@ -66,7 +65,6 @@ inline void main_loop(void* params = nullptr)
     cv::Mat1b carMask = cv::Mat::zeros(frame.size(), CV_8UC1);
     cv::Mat1b whiteMask = cv::Mat::zeros(frame.size(), CV_8UC1);
     cv::Mat1b whiteLine = cv::Mat::zeros(frame.size(), CV_8UC1);
-#endif
 
     while (true)
     {
@@ -82,7 +80,7 @@ inline void main_loop(void* params = nullptr)
         uart_get_buffered_data_len(UART_NUM_0, &buffSize);
         if (buffSize >= sizeof(PicoToEspPacket)) {
             inPacket = pico.receivePacket();
-            pico.sendAck(true, inPacket.label);
+            pico.sendAck(true, std::string(inPacket.label));
         }
 
         // bool carDetected = MicroCV2::processCarImg(frame, carMask);
@@ -96,7 +94,7 @@ inline void main_loop(void* params = nullptr)
         // std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         // //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         // printf(byteString.c_str());
-        pico.sendPacket(dist, stopDetected, frame);
+        pico.sendPacket(dist, stopDetected);
 
         int64_t currTick = esp_timer_get_time();
         int64_t loop_ticks = currTick - prevTick;
@@ -121,20 +119,7 @@ void app_main(void)
     i2c_master_init(&screen, CONFIG_SDA_GPIO, CONFIG_SCL_GPIO, CONFIG_RESET_GPIO);
     ssd1306_init(&screen, LCD::SCREEN_WIDTH, LCD::SCREEN_HEIGHT);
 
-    // Init tx pin
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-    uart_config_t uart_config = {
-        .baud_rate = UART_TX_BAUD,
-        .data_bits = UART_DATA_8_BITS,
-        .parity = UART_PARITY_DISABLE,
-        .stop_bits = UART_STOP_BITS_1,
-        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
-    };
-#pragma GCC diagnostic pop
-
-    uart_param_config(UART_NUM_0, &uart_config);
-    uart_driver_install(UART_NUM_0, 1024 * 2, 0, 0, NULL, 0);
+    PiPico::getInstance().init();
 
     main_loop();
 }

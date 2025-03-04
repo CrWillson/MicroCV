@@ -1,4 +1,7 @@
 #include "pipico.hpp"
+#include "communication_types.hpp"
+#include "driver/uart.h"
+#include "hal/uart_types.h"
 
 void PiPico::init()
 {
@@ -20,7 +23,11 @@ void PiPico::init()
 
 void PiPico::sendPacket(const uint8_t dist, const bool stopDetected)
 {
+    // // Send a synchronization byte
+    // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
+    
     EspToPicoPacket sendPacket;
+    sendPacket.packetType = EspPacketType::BASIC_PACKET;
     sendPacket.whiteDist = dist;
     sendPacket.stopDetected = stopDetected;
 
@@ -31,21 +38,26 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected)
 
 void PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &image)
 {
-    EspToPicoPacketImage sendPacket;
+    // // Send a synchronization byte
+    // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
+    
+    EspToPicoPacket sendPacket;
+    sendPacket.packetType = EspPacketType::IMAGE_PACKET;
     sendPacket.whiteDist = dist;
     sendPacket.stopDetected = stopDetected;
 
+    uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
     
     for (int y = 0; y < image.rows; y++) {
         for (int x = 0; x < image.cols; x++) {
             cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
             uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
 
-            sendPacket.image[y][x] = pixel;
+            uart_write_bytes(UART_NUM_0, &pixel, sizeof(pixel));
         }
     }
 
-    uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
+    // uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
 }
 
 void PiPico::sendAck(const bool ack, const std::string& label)
