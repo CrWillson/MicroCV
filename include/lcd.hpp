@@ -32,10 +32,6 @@ namespace LCD {
     public:
         cv::Mat1b frame;                ///< The image to print to the screen.
         int loop_ticks;          ///< The number of ticks which have thus far passed.
-        int8_t dist;            ///< The number of pixels the line on the screen is from its ideal, calibrated position.
-        int8_t height;
-        bool stop_detected;             ///< Whether the stop line has been detected.
-        bool car_detected;              ///< Whether a car has been detected
     };
 
 

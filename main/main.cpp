@@ -55,6 +55,7 @@ uint16_t packValues(int8_t num, bool b1, bool b2) {
 inline void main_loop(void* params = nullptr)
 {
     cv::Mat frame = cv::Mat::zeros(96, 96, CV_8UC2);
+    auto& pico = PiPico::getInstance();
 
 #ifndef DEBUG_MODE
     int8_t dist = 0;
@@ -76,13 +77,13 @@ inline void main_loop(void* params = nullptr)
             continue;
         }
 
-        // uint8_t data[2];
-        // printf("Waiting for 2 bytes...\n");
-        // int len = uart_read_bytes(UART_NUM, data, sizeof(data), 20 / portTICK_PERIOD_MS);
-        // if (len > 0) {
-        //     printf("Received: %d %d\n", data[0], data[1]);
-        // }
-        // vTaskDelay(1);
+        size_t buffSize;
+        PicoToEspPacket inPacket;
+        uart_get_buffered_data_len(UART_NUM_0, &buffSize);
+        if (buffSize >= sizeof(PicoToEspPacket)) {
+            inPacket = pico.receivePacket();
+            pico.sendAck(true, inPacket.label);
+        }
 
         // bool carDetected = MicroCV2::processCarImg(frame, carMask);
         bool carDetected = false;
@@ -91,10 +92,11 @@ inline void main_loop(void* params = nullptr)
 
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
-        auto packedByte = packValues(dist, stopDetected, carDetected);
-        std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
-        //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
-        printf(byteString.c_str());
+        // auto packedByte = packValues(dist, stopDetected, carDetected);
+        // std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
+        // //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
+        // printf(byteString.c_str());
+        pico.sendPacket(dist, stopDetected, frame);
 
         int64_t currTick = esp_timer_get_time();
         int64_t loop_ticks = currTick - prevTick;
@@ -103,10 +105,6 @@ inline void main_loop(void* params = nullptr)
         LCD::PrintParams params;
         params.loop_ticks = loop_ticks;
         params.frame = redMask | whiteLine | whiteMask;
-        params.dist = dist;
-        params.height = height;
-        params.stop_detected = stopDetected;
-        params.car_detected = carDetected;
 
         LCD::output_to_screen(screen, params);
 

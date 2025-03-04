@@ -5,6 +5,7 @@ idf_component_register(
         "lcd.cpp"
         #"microcv.cpp"
         "microcv2.cpp"
+        "pipico.cpp"
     INCLUDE_DIRS 
         "."
         "../include"

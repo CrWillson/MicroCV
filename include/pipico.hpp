@@ -1,11 +1,19 @@
 #pragma once
 
 #include <cstdint>
-#include "esp_timer.h"
+#include "sdkconfig.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
+
+// FreeRTOS imports
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/portmacro.h"
+
 #include "params.h"
 #include "constants.hpp"
+#include "opencv2.hpp"
+#include "communication_types.hpp"
 
 class PiPico {
 public:
@@ -14,31 +22,16 @@ public:
         return instance;
     }
 
-    struct SendPacket
-    {
-        int8_t whiteDist;
-        bool stopDetected;
-        uint16_t image[96][96];
-    };
-    
-    struct RecvPacket
-    {
-        char command[6];
-        char label[6];
-        int16_t data;
-    };
-
-    struct AckPacket
-    {
-        bool ack;
-        char label[6];
-    };
-
-
-    void sendPacket(const uint8_t dist, const bool stopDetected, const uint16_t image[96][96]);
-    RecvPacket receivePacket();
 
     void init();
+
+    void sendPacket(const uint8_t dist, const bool stopDetected);
+    void sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &image);
+
+    void sendAck(const bool ack, const std::string& label);
+    PicoToEspPacket receivePacket();
+
+    bool photoRequested = false;
 
 private:
     PiPico() = default;
@@ -46,5 +39,4 @@ private:
 
     PiPico(const PiPico&) = delete;
     PiPico& operator=(const PiPico&) = delete;
-
 };
