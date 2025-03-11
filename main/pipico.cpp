@@ -27,9 +27,9 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected)
     // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
     
     EspToPicoPacket sendPacket;
-    sendPacket.packetType = EspPacketType::BASIC_PACKET;
     sendPacket.whiteDist = dist;
     sendPacket.stopDetected = stopDetected;
+    sendPacket.imageIncluded = false;
 
     // printf(reinterpret_cast<const char*>(&sendPacket));
 
@@ -42,9 +42,9 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::M
     // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
     
     EspToPicoPacket sendPacket;
-    sendPacket.packetType = EspPacketType::IMAGE_PACKET;
     sendPacket.whiteDist = dist;
     sendPacket.stopDetected = stopDetected;
+    sendPacket.imageIncluded = true;
 
     uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
     
