@@ -1,7 +1,10 @@
 #include "pipico.hpp"
 #include "communication_types.hpp"
 #include "driver/uart.h"
+#include "freertos/idf_additions.h"
 #include "hal/uart_types.h"
+#include <cstdio>
+#include <string>
 
 void PiPico::init()
 {
@@ -23,8 +26,8 @@ void PiPico::init()
 
 void PiPico::sendPacket(const uint8_t dist, const bool stopDetected)
 {
-    // // Send a synchronization byte
-    // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
+    // Send a synchronization byte
+    uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&SYNC_BYTES), sizeof(SYNC_BYTES));
     
     EspToPicoPacket sendPacket;
     sendPacket.whiteDist = dist;
@@ -38,8 +41,8 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected)
 
 void PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &image)
 {
-    // // Send a synchronization byte
-    // uart_write_bytes(UART_NUM_0, &SYNC_BYTE, sizeof(SYNC_BYTE));
+    // Send a synchronization byte
+    uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&SYNC_BYTES), sizeof(SYNC_BYTES));
     
     EspToPicoPacket sendPacket;
     sendPacket.whiteDist = dist;
@@ -48,16 +51,20 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::M
 
     uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
     
-    for (int y = 0; y < image.rows; y++) {
-        for (int x = 0; x < image.cols; x++) {
-            cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
-            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
+    // uart_write_bytes(UART_NUM_0, image.data, IMG_SIZE);
+    // for (int row = 0; row < IMG_ROWS; ++row) {
+    //     for (int col = 0; col < IMG_COLS; ++col) {
+    //         // For each pixel in the image, access both channels (CV_8UC2)
+    //         uint8_t byte1 = image.at<cv::Vec2b>(row, col)[0];  // First channel
+    //         uint8_t byte2 = image.at<cv::Vec2b>(row, col)[1];  // Second channel
 
-            uart_write_bytes(UART_NUM_0, &pixel, sizeof(pixel));
-        }
-    }
+    //         // Send each byte individually
+    //         uart_write_bytes(UART_NUM_0, (const char*)&byte1, 1);  // Send first byte
+    //         uart_write_bytes(UART_NUM_0, (const char*)&byte2, 1);  // Send second byte
+    //     }
+    // }
 
-    // uart_write_bytes(UART_NUM_0, reinterpret_cast<const char*>(&sendPacket), sizeof(sendPacket));
+    print_matrix_string(image);
 }
 
 void PiPico::sendAck(const bool ack, const std::string& label)
@@ -81,4 +88,43 @@ PicoToEspPacket PiPico::receivePacket()
         // Handle error or return an empty/default packet
         return PicoToEspPacket();
     }
+}
+
+void PiPico::print_matrix_string(const cv::Mat& mat) 
+{
+    for (int i = 0; i < mat.rows; ++i) {
+        std::string currLine;
+        for (int j = 0; j < mat.cols; ++j) {
+            cv::Vec2b vecpixel = mat.at<cv::Vec2b>(i, j);
+            uint16_t pixel = (static_cast<uint16_t>(vecpixel[1]) << 8) | vecpixel[0];
+            // convert the pixel to a string in hex
+            char buffer[5];
+            sprintf(buffer, "%04X", pixel); // 4 hex digits
+            auto strpixel = std::string(buffer);
+            currLine += strpixel;
+            vTaskDelay(1);
+        }
+        currLine += "\n";
+        printf("%s", currLine.c_str());
+        vTaskDelay(1);
+    }
+}
+
+void PiPico::print_matrix(const cv::Mat& mat) 
+{
+    for (int i = 0; i < mat.rows; ++i) {
+        for (int j = 0; j < mat.cols; ++j) {
+            cv::Vec2b vecpixel = mat.at<cv::Vec2b>(i, j);
+
+            uint8_t highByte = static_cast<uint8_t>(vecpixel[0]);
+            uint8_t lowByte = static_cast<uint8_t>(vecpixel[1]);
+
+            uart_write_bytes(UART_NUM_0, &highByte, sizeof(highByte));
+            uart_write_bytes(UART_NUM_0, &lowByte, sizeof(lowByte));
+
+            vTaskDelay(1);
+        }
+        vTaskDelay(1);
+    }
+
 }

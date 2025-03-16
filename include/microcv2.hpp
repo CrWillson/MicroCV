@@ -17,6 +17,8 @@ namespace MicroCV2 {
 
     void RGB565toRGB888(const uint16_t pixel, uint16_t& red, uint16_t& green, uint16_t& blue);
 
+    constexpr uint16_t RGB888toRGB565(const uint8_t r, const uint8_t g, const uint8_t b);
+
     /**
      * Set all pixels outside the specified box to (0,0,0)
      */
@@ -36,5 +38,7 @@ namespace MicroCV2 {
     bool processWhiteImg(const cv::Mat& img, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist, int8_t& height);
 
     // bool maskAllColors(const cv::Mat& img, cv::Mat1b& redMask, uint16_t& rCount, cv::Mat1b& whiteMask, uint16_t& wCount);
+
+    void generateColorBars(cv::Mat& image);
 
 }

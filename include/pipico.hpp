@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include "sdkconfig.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
@@ -39,4 +40,7 @@ private:
 
     PiPico(const PiPico&) = delete;
     PiPico& operator=(const PiPico&) = delete;
+
+    void print_matrix_string(const cv::Mat& mat);
+    void print_matrix(const cv::Mat& mat);
 };

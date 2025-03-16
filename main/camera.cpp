@@ -67,19 +67,3 @@ esp_err_t ESPCamera::get_frame(cv::Mat& image)
     esp_camera_fb_return(fb);
     return ESP_OK;
 }
-
-#ifdef DEBUG_MODE
-void ESPCamera::debug::print_matrix(const cv::Mat& mat) 
-{
-    printf("START IMAGE\n");
-    for (int i = 0; i < mat.rows; ++i) {
-        for (int j = 0; j < mat.cols; ++j) {
-            cv::Vec2b vecpixel = mat.at<cv::Vec2b>(i, j);
-            uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
-            printf("%d ", pixel);
-        }
-        printf("\n");
-    }
-    printf("END IMAGE\n");
-}
-#endif

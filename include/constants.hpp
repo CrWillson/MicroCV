@@ -23,16 +23,13 @@
 #define CAM_PIN_HREF    23
 #define CAM_PIN_PCLK    22
 
-// If this is a "1", then send the raw image from the ESP-32 over the serial port. If 0, don't.
-// #define DEBUG_MODE
-// #define PRINT_MATRIX
-#define READ_UART
-
-#define PRINT_LINE_THRESH 0
-#define PRINT_STOP_THRESH 0
-#define PRINT_COMBINED_THRESH 1
 
 // The pin to write to.
 #define TX_GPIO GPIO_NUM_1
 #define UART_NUM UART_NUM_0
-constexpr uint32_t UART_TX_BAUD = 500000;
+constexpr uint32_t UART_TX_BAUD = 115200;
+
+constexpr uint8_t IMG_ROWS = 96;
+constexpr uint8_t IMG_COLS = 96;
+constexpr uint8_t IMG_BPP = 2;
+constexpr uint16_t IMG_SIZE = IMG_ROWS * IMG_COLS * IMG_BPP;

@@ -22,7 +22,7 @@ enum PacketType : uint8_t {
     ACK_PACKET = 0x03
 };
 
-static constexpr uint32_t SYNC_BYTES = 0xF90D63EE;
+static constexpr uint32_t SYNC_BYTES = 0xFEDCBA98;
 
 #pragma pack(push, 1)   // Remove padding from structs for consistent memory layout
 

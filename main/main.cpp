@@ -75,6 +75,9 @@ inline void main_loop(void* params = nullptr)
             continue;
         }
 
+        // // DEBUG PURPOSES: GENERATE COLOR BARS INSTEAD OF IMAGES
+        // MicroCV2::generateColorBars(frame);
+
         size_t buffSize;
         PicoToEspPacket inPacket;
         uart_get_buffered_data_len(UART_NUM_0, &buffSize);
@@ -94,7 +97,7 @@ inline void main_loop(void* params = nullptr)
         // std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
         // //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
         // printf(byteString.c_str());
-        pico.sendPacket(dist, stopDetected);
+        pico.sendPacket(dist, stopDetected, frame);
 
         int64_t currTick = esp_timer_get_time();
         int64_t loop_ticks = currTick - prevTick;

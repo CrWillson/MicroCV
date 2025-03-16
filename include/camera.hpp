@@ -19,9 +19,4 @@ namespace ESPCamera {
 
     esp_err_t get_frame(cv::Mat& image);
 
-#ifdef DEBUG_MODE
-    namespace debug {
-        void print_matrix(const cv::Mat& mat);
-    }
-#endif
 }

@@ -1,4 +1,5 @@
 #include "microcv2.hpp"
+#include "constants.hpp"
 
 void MicroCV2::RGB565toRGB888(const uint16_t pixel, uint16_t& red, uint16_t& green, uint16_t& blue)
 {
@@ -9,6 +10,15 @@ void MicroCV2::RGB565toRGB888(const uint16_t pixel, uint16_t& red, uint16_t& gre
     red = (red * 255) / 31;
     green = (green * 255) / 63;
     blue = (blue * 255) / 31;
+}
+
+constexpr uint16_t MicroCV2::RGB888toRGB565(const uint8_t r, const uint8_t g, const uint8_t b)
+{
+    uint16_t red = (r * 31) / 255;
+    uint16_t green = (g * 63) / 255;
+    uint16_t blue = (b * 31) / 255;
+
+    return (red << 11) | (green << 5) | blue;
 }
 
 void MicroCV2::cropImage(cv::Mat& image, const cv::Point2i& BOX_TL, const cv::Point2i& BOX_BR)
@@ -175,4 +185,31 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     if (dist < -MAX_WHITE_DIST) dist = -MAX_WHITE_DIST;
 
     return true;
+}
+
+
+void MicroCV2::generateColorBars(cv::Mat& image)
+{
+    uint16_t colors[] = {
+        RGB888toRGB565(255, 0, 0),    // Red        - 0xf800
+        RGB888toRGB565(0, 255, 0),    // Green      - 0x07e0
+        RGB888toRGB565(0, 0, 255),    // Blue       - 0x001f
+        RGB888toRGB565(255, 255, 0),  // Yellow     - 0xffe0
+        RGB888toRGB565(0, 255, 255),  // Cyan       - 0x07ff
+        RGB888toRGB565(255, 0, 255)   // Magenta    - 0xf81f
+    };
+
+    int barWidth = IMG_COLS / 6; // Each bar takes 1/6 of the width
+
+    for (int y = 0; y < IMG_ROWS; y++) {
+        for (int x = 0; x < IMG_COLS; x++) {
+            int barIndex = x / barWidth; // Determine which color bar to use
+            uint16_t color = colors[barIndex];
+
+            // Store color as two bytes (little-endian)
+            cv::Vec2b& pixel = image.at<cv::Vec2b>(y, x);
+            pixel[0] = color & 0xFF;       // Lower byte
+            pixel[1] = (color >> 8) & 0xFF; // Upper byte
+        }
+    }
 }
