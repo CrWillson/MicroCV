@@ -30,7 +30,7 @@ public:
     void sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &image);
 
     void sendAck(const bool ack, const std::string& label);
-    PicoToEspPacket receivePacket();
+    esp_err_t receivePacket();
 
     bool photoRequested = false;
 
@@ -41,6 +41,7 @@ private:
     PiPico(const PiPico&) = delete;
     PiPico& operator=(const PiPico&) = delete;
 
-    void print_matrix_string(const cv::Mat& mat);
+    void process_command(const PicoToEspPacket& packet);
+
     void print_matrix(const cv::Mat& mat);
 };

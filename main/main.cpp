@@ -78,13 +78,8 @@ inline void main_loop(void* params = nullptr)
         // // DEBUG PURPOSES: GENERATE COLOR BARS INSTEAD OF IMAGES
         // MicroCV2::generateColorBars(frame);
 
-        size_t buffSize;
-        PicoToEspPacket inPacket;
-        uart_get_buffered_data_len(UART_NUM_0, &buffSize);
-        if (buffSize >= sizeof(PicoToEspPacket)) {
-            inPacket = pico.receivePacket();
-            pico.sendAck(true, std::string(inPacket.label));
-        }
+        // Get a packet from the Pico if one is available
+        esp_err_t result = pico.receivePacket();
 
         // bool carDetected = MicroCV2::processCarImg(frame, carMask);
         bool carDetected = false;
@@ -93,11 +88,11 @@ inline void main_loop(void* params = nullptr)
 
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
-        // auto packedByte = packValues(dist, stopDetected, carDetected);
-        // std::string byteString = std::bitset<10>(packedByte).to_string() + "\n";
-        // //uart_write_bytes(UART_NUM, byteString.c_str(), byteString.size());
-        // printf(byteString.c_str());
-        pico.sendPacket(dist, stopDetected, frame);
+        if (pico.photoRequested) {
+            pico.sendPacket(dist, stopDetected, frame);
+        } else {
+            pico.sendPacket(dist, stopDetected);
+        }
 
         int64_t currTick = esp_timer_get_time();
         int64_t loop_ticks = currTick - prevTick;
