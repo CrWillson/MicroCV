@@ -9,6 +9,7 @@
 // Stdlib imports
 #include <vector>
 #include <string>
+#include <cstdint>
 #include <sstream>
 #include <iomanip>
 #include <mutex>
@@ -31,7 +32,10 @@ namespace LCD {
     class PrintParams {
     public:
         cv::Mat1b frame;                ///< The image to print to the screen.
-        int loop_ticks;          ///< The number of ticks which have thus far passed.
+        int loop_ticks;                 ///< The number of ticks which have thus far passed.
+        int white_dist;
+        bool stop_detected;
+        int other;                      ///< Free usable integer
     };
 
 
