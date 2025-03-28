@@ -4,7 +4,7 @@
 #include "opencv2.hpp"
 
 
-#include "params.h"
+#include "params.hpp"
 #include "constants.hpp"
 #include "esp_log.h"
 #include "driver/uart.h"

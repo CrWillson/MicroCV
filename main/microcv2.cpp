@@ -30,7 +30,7 @@ void MicroCV2::cropImage(cv::Mat& image, const cv::Point2i& BOX_TL, const cv::Po
 
 bool MicroCV2::isStopLine(const uint16_t red, const uint16_t green, const uint16_t blue)
 {
-    if (red >= green + STOP_GREEN_TOLERANCE && red >= blue + STOP_BLUE_TOLERANCE) { 
+    if (red >= green + Params::STOP_GREEN_TOLERANCE && red >= blue + Params::STOP_BLUE_TOLERANCE) { 
         return true;
     }
     return false;
@@ -38,7 +38,7 @@ bool MicroCV2::isStopLine(const uint16_t red, const uint16_t green, const uint16
 
 bool MicroCV2::isWhiteLine(const uint16_t red, const uint16_t green, const uint16_t blue)
 {
-    if (red >= WHITE_RED_THRESH && green >= WHITE_GREEN_THRESH && blue >= WHITE_BLUE_THRESH) { 
+    if (red >= Params::WHITE_RED_THRESH && green >= Params::WHITE_GREEN_THRESH && blue >= Params::WHITE_BLUE_THRESH) { 
         return true;
     }
     return false;
@@ -80,7 +80,7 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
             RGB565toRGB888(pixel, red, green, blue);
 
             if (isStopLine(red, green, blue) && !isWhiteLine(red, green, blue)) {
-                if (x >= STOPBOX_TL.x && x <= STOPBOX_BR.x && y >= STOPBOX_TL.y && y <= STOPBOX_BR.y) {
+                if (x >= Params::STOPBOX_TL_X && x <= Params::STOPBOX_BR_X && y >= Params::STOPBOX_TL_Y && y <= Params::STOPBOX_BR_Y) {
                     redCount++;
                     mask.at<uchar>(y,x) = 255;
                 }
@@ -88,10 +88,14 @@ bool MicroCV2::processRedImg(const cv::Mat& image, cv::Mat1b& mask)
         }
     }
 
+    const cv::Point2i STOPBOX_TL(Params::STOPBOX_TL_X,Params::STOPBOX_TL_Y);
+    const cv::Point2i STOPBOX_BR(Params::STOPBOX_BR_X,Params::STOPBOX_BR_Y);
     cv::rectangle(mask, STOPBOX_TL, STOPBOX_BR, cv::Scalar(255), 1);
 
+    const uint16_t STOPBOX_AREA = Params::BOX_AREA(Params::STOPBOX_TL_X, Params::STOPBOX_TL_Y, Params::STOPBOX_BR_X, Params::STOPBOX_BR_Y);
+
     uint16_t percentRed = (redCount*10000) / STOPBOX_AREA;
-    return percentRed >= (PERCENT_TO_STOP*100);
+    return percentRed >= (Params::PERCENT_TO_STOP*100);
 }
 
 bool MicroCV2::processCarImg(const cv::Mat &image, cv::Mat1b &mask)
@@ -107,8 +111,8 @@ bool MicroCV2::processCarImg(const cv::Mat &image, cv::Mat1b &mask)
             uint16_t red, green, blue;
             RGB565toRGB888(pixel, red, green, blue);
 
-            if (green >= red + CAR_RED_TOLERANCE && green >= blue + CAR_BLUE_TOLERANCE) {
-                if (x >= CARBOX_TL.x && x <= CARBOX_BR.x && y >= CARBOX_TL.y && y <= CARBOX_BR.y) {
+            if (green >= red + Params::CAR_RED_TOLERANCE && green >= blue + Params::CAR_BLUE_TOLERANCE) {
+                if (x >= Params::CARBOX_TL.x && x <= Params::CARBOX_BR.x && y >= Params::CARBOX_TL.y && y <= Params::CARBOX_BR.y) {
                     carCount++;
                     mask.at<uint8_t>(y,x) = 255;
                 }
@@ -116,10 +120,10 @@ bool MicroCV2::processCarImg(const cv::Mat &image, cv::Mat1b &mask)
         }
     }
 
-    cv::rectangle(mask, CARBOX_TL, CARBOX_BR, cv::Scalar(255), 1);
+    cv::rectangle(mask, Params::CARBOX_TL, Params::CARBOX_BR, cv::Scalar(255), 1);
 
-    uint16_t percentCar = (carCount*10000) / CARBOX_AREA;
-    return percentCar >= (PERCENT_TO_CAR*100);
+    uint16_t percentCar = (carCount*10000) / Params::CARBOX_AREA;
+    return percentCar >= (Params::PERCENT_TO_CAR*100);
 }
 
 bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b& centerLine, int8_t& dist, int8_t& height)
@@ -127,8 +131,8 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
     centerLine = cv::Mat::zeros(image.size(), CV_8UC1);
 
-    for (uint8_t y = WHITE_VERTICAL_CROP; y < image.rows; ++y) {
-        for (uint8_t x = 0; x < WHITE_HORIZONTAL_CROP; ++x) {
+    for (uint8_t y = Params::WHITE_VERTICAL_CROP; y < image.rows; ++y) {
+        for (uint8_t x = 0; x < Params::WHITE_HORIZONTAL_CROP; ++x) {
             cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
             uint16_t pixel = (static_cast<uint16_t>(vecpixel[0]) << 8) | vecpixel[1];
 
@@ -158,7 +162,7 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
             maxInd = i;
         }
     }
-    if (maxSize < WHITE_MIN_SIZE) return false;
+    if (maxSize < Params::WHITE_MIN_SIZE) return false;
 
     cv::Rect boundingBox = cv::boundingRect(contours[maxInd]);
     dist = boundingBox.x + boundingBox.width / 2;
@@ -179,10 +183,10 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     cv::line(centerLine, cv::Point(dist, 0), cv::Point(dist, mask.rows - 1), cv::Scalar(255), 1);
     cv::line(centerLine, cv::Point(0, height), cv::Point(mask.cols - 1, height), cv::Scalar(255), 1);
     
-    dist -= WHITE_CENTER_POS;
+    dist -= Params::WHITE_CENTER_POS;
 
-    if (dist > MAX_WHITE_DIST) dist = MAX_WHITE_DIST;
-    if (dist < -MAX_WHITE_DIST) dist = -MAX_WHITE_DIST;
+    if (dist > Params::MAX_WHITE_DIST) dist = Params::MAX_WHITE_DIST;
+    if (dist < -Params::MAX_WHITE_DIST) dist = -Params::MAX_WHITE_DIST;
 
     return true;
 }

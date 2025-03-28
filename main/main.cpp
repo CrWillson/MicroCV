@@ -13,6 +13,7 @@
 #include <esp_spiffs.h>
 #include <esp_log.h>
 #include "constants.hpp"
+#include "params.hpp"
 #include "sdkconfig.h"
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -25,10 +26,10 @@
 #include "freertos/portmacro.h"
 
 // In-project imports
+#include "microcv2.hpp"
 #include "camera.hpp"
 #include "lcd.hpp"
 #include "pipico.hpp"
-#include "microcv2.hpp"
 
 
 // This is necessary because it allows ESP-IDF to find the main function,
@@ -79,7 +80,7 @@ inline void main_loop(void* params = nullptr)
         // MicroCV2::generateColorBars(frame);
 
         // Get a packet from the Pico if one is available
-        esp_err_t result = pico.receivePacket();
+        esp_err_t pacresult = pico.receivePacket();
 
         // bool carDetected = MicroCV2::processCarImg(frame, carMask);
         bool carDetected = false;
@@ -89,9 +90,9 @@ inline void main_loop(void* params = nullptr)
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
         if (pico.photoRequested) {
-            pico.sendPacket(dist, stopDetected, frame);
+            pico.sendPacket(dist, stopReady, frame);
         } else {
-            pico.sendPacket(dist, stopDetected);
+            pico.sendPacket(dist, stopReady);
         }
 
         int64_t currTick = esp_timer_get_time();
@@ -101,7 +102,9 @@ inline void main_loop(void* params = nullptr)
         LCD::PrintParams params;
         params.loop_ticks = loop_ticks;
         params.frame = redMask | whiteLine | whiteMask;
-
+        params.white_dist = dist;
+        params.stop_detected = stopPending;
+        // uart_get_buffered_data_len(UART_NUM, &params.other);
         LCD::output_to_screen(screen, params);
 
         vTaskDelay(1);
