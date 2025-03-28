@@ -7,6 +7,7 @@
 // THESE TYPES MUST BE EXACTLY THE SAME ON BOTH THE ARDUINO AND THE ESP32.
 //--------------------------------------------------------------------------------------------
 
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 #include <string>
@@ -20,6 +21,20 @@ enum PacketType : uint8_t {
     ESP_PACKET = 0x01,
     COMMAND_PACKET = 0x02,
     ACK_PACKET = 0x03
+};
+
+enum PacketLabel : uint8_t {
+    NULL_LABEL = 0x00,
+    PARAM_WHITE_RED_LIMIT = 0x01,
+    PARAM_WHITE_GREEN_LIMIT = 0x02,
+    PARAM_WHITE_BLUE_LIMIT = 0x03,
+    PARAM_PERCENT_TO_STOP = 0x04,
+    PARAM_STOP_GREEN_TOLERANCE = 0x05,
+    PARAM_STOP_BLUE_TOLERANCE = 0x06,
+    PARAM_STOPBOX_TL_X = 0x07,
+    PARAM_STOPBOX_TL_Y = 0x08,
+    PARAM_STOPBOX_BR_X = 0x09,
+    PARAM_STOPBOX_BR_Y = 0x0A
 };
 
 static constexpr uint32_t SYNC_BYTES = 0xAA55AA55;
@@ -38,15 +53,8 @@ struct PicoToEspPacket
 {
     PacketType packetType = COMMAND_PACKET;
     EspCommand command;
-    char label[6];
+    PacketLabel label;
     int16_t data;
-};
-
-struct AckPacket
-{
-    PacketType packetType = ACK_PACKET;
-    bool ack;
-    char label[6];
 };
 
 #pragma pack(pop)

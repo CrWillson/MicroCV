@@ -11,7 +11,7 @@
 #include "freertos/task.h"
 #include "freertos/portmacro.h"
 
-#include "params.h"
+#include "params.hpp"
 #include "constants.hpp"
 #include "opencv2.hpp"
 #include "communication_types.hpp"
@@ -29,7 +29,6 @@ public:
     void sendPacket(const uint8_t dist, const bool stopDetected);
     void sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &image);
 
-    void sendAck(const bool ack, const std::string& label);
     esp_err_t receivePacket();
 
     bool photoRequested = false;

@@ -27,7 +27,7 @@
 // The pin to write to.
 #define TX_GPIO GPIO_NUM_1
 #define UART_NUM UART_NUM_0
-constexpr uint32_t UART_TX_BAUD = 500000;
+constexpr uint32_t UART_TX_BAUD = 250000;
 
 constexpr uint8_t IMG_ROWS = 96;
 constexpr uint8_t IMG_COLS = 96;

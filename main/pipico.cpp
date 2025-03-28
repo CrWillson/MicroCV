@@ -3,6 +3,7 @@
 #include "driver/uart.h"
 #include "freertos/idf_additions.h"
 #include "hal/uart_types.h"
+#include "params.hpp"
 #include <cstdio>
 #include <string>
 
@@ -54,17 +55,6 @@ void PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::M
     photoRequested = false;
 }
 
-void PiPico::sendAck(const bool ack, const std::string& label)
-{
-    AckPacket ackPacket;
-    ackPacket.ack = ack;
-    strncpy(ackPacket.label, label.c_str(), sizeof(ackPacket.label) - 1);
-    ackPacket.label[sizeof(ackPacket.label) - 1] = '\0'; // Ensure null-termination
-
-    uart_write_bytes(UART_NUM, reinterpret_cast<const char*>(&ackPacket), sizeof(ackPacket));
-}
-
-
 esp_err_t PiPico::receivePacket()
 {
     // check if there are enough buffered bytes for the sync bytes + packet
@@ -102,15 +92,6 @@ esp_err_t PiPico::receivePacket()
         return ESP_FAIL;
     }
     
-    
-    // PicoToEspPacket recvPacket;
-    // int length = uart_read_bytes(UART_NUM, reinterpret_cast<uint8_t*>(&recvPacket), sizeof(recvPacket), 20 / portTICK_PERIOD_MS);
-    // if (length == sizeof(recvPacket)) {
-    //     return ESP_OK;
-    // } else {
-    //     // Handle error or return an empty/default packet
-    //     return ESP_FAIL;
-    // }
 }
 
 void PiPico::process_command(const PicoToEspPacket &packet)
@@ -121,6 +102,29 @@ void PiPico::process_command(const PicoToEspPacket &packet)
             break;
         case CMD_SET_PARAM:
             // Set the correct parameter
+            if (packet.label == PARAM_WHITE_RED_LIMIT) {
+                Params::WHITE_RED_THRESH = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_WHITE_GREEN_LIMIT) {
+                Params::WHITE_GREEN_THRESH = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_WHITE_BLUE_LIMIT) {
+                Params::WHITE_BLUE_THRESH = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_PERCENT_TO_STOP) {
+                Params::PERCENT_TO_STOP = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOP_GREEN_TOLERANCE) {
+                Params::STOP_GREEN_TOLERANCE = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOP_BLUE_TOLERANCE) {
+                Params::STOP_BLUE_TOLERANCE = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOPBOX_TL_X) {
+                Params::STOPBOX_TL_X = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOPBOX_TL_Y) {
+                Params::STOPBOX_TL_Y = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOPBOX_BR_X) {
+                Params::STOPBOX_BR_X = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_STOPBOX_BR_Y) {
+                Params::STOPBOX_BR_Y = static_cast<uint8_t>(packet.data);
+            } else {
+                // Handle unknown parameter
+            }
             break;
         default:
             break;
