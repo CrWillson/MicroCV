@@ -1,5 +1,8 @@
 #include "microcv2.hpp"
-#include "constants.hpp"
+#include "params.hpp"
+#include <algorithm>
+
+using contour_t = std::vector<cv::Point2i>;
 
 void MicroCV2::RGB565toRGB888(const uint16_t pixel, uint16_t& red, uint16_t& green, uint16_t& blue)
 {
@@ -131,6 +134,7 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
     centerLine = cv::Mat::zeros(image.size(), CV_8UC1);
 
+    // Mask and crop the image in one pass
     for (uint8_t y = Params::WHITE_VERTICAL_CROP; y < image.rows; ++y) {
         for (uint8_t x = 0; x < Params::WHITE_HORIZONTAL_CROP; ++x) {
             cv::Vec2b vecpixel = image.at<cv::Vec2b>(y, x);
@@ -147,44 +151,57 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
 
     // cropImage(mask, {0, WHITE_VERTICAL_CROP}, {WHITE_HORIZONTAL_CROP, 95});
 
+    // Find all contours
     std::vector<contour_t> contours;
     cv::findContours(mask, contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
     if (contours.size() == 0) {
         return false;
     }
 
-    int maxSize = 0;
-    int maxInd = 0;
-    for (int i = 0; i < contours.size(); i++) {
-        int size = cv::contourArea(contours[i]);
-        if (size > maxSize) {
-            maxSize = size;
-            maxInd = i;
+    // Sort the contours to put the largest at index 0
+    std::sort(contours.begin(), contours.end(), [](const contour_t& a, const contour_t& b) {
+            return cv::contourArea(a) > cv::contourArea(b);
+    });
+    if (cv::contourArea(contours[0]) < Params::WHITE_MIN_SIZE) return false;
+    
+
+
+    cv::Point bottomLeft = contours[0][0];
+    cv::Point leftTop = contours[0][0];
+
+    for (const auto& pt : contours[0]) {
+        // bottom left point
+        if (pt.y > bottomLeft.y || (bottomLeft.y == pt.y && pt.x < bottomLeft.x)) {
+            bottomLeft = pt;
+        }
+        // left top point
+        if (pt.x < leftTop.x || (pt.x == leftTop.x && pt.y < leftTop.y)) {
+            leftTop = pt;
         }
     }
-    if (maxSize < Params::WHITE_MIN_SIZE) return false;
 
-    cv::Rect boundingBox = cv::boundingRect(contours[maxInd]);
-    dist = boundingBox.x + boundingBox.width / 2;
-    height = boundingBox.y + boundingBox.height / 2;
+    // Find the line through the bottomLeft and leftTop points
+    float slope = (float)(bottomLeft.y - leftTop.y) / (bottomLeft.x - leftTop.x);
+    float y_intercept = leftTop.y - slope * leftTop.x;
 
-    cv::Point leftmost_topmost = contours[maxInd][0];
+    // Draw the line
+    int16_t p1_x, p1_y, p2_x, p2_y;
+    p1_y = 0;
+    p2_y = mask.rows - 1;
+    p1_x = (p1_y - y_intercept) / slope;
+    p2_x = (p2_y - y_intercept) / slope;
+    cv::line(centerLine, cv::Point(p1_x, p1_y), cv::Point(p2_x, p2_y), cv::Scalar(255), 1);
 
-    // Iterate through the contour to find the topmost-leftmost point
-    for (const auto& point : contours[maxInd]) {
-        if (point.x < leftmost_topmost.x || 
-            (point.x == leftmost_topmost.x && point.y < leftmost_topmost.y)) {
-            leftmost_topmost = point;
-        }
-    } 
-    dist = leftmost_topmost.x;
-    height = leftmost_topmost.y;
+    // Point where the slope line intersects the WHITE_VERTICAL_CROP line
+    cv::Point intersectionPoint;        
+    intersectionPoint.y = Params::WHITE_VERTICAL_CROP;
+    intersectionPoint.x = (intersectionPoint.y - y_intercept) / slope;
+    cv::line(centerLine, cv::Point(intersectionPoint.x, 0), cv::Point(intersectionPoint.x, mask.rows - 1), cv::Scalar(255), 1);
+    cv::line(centerLine, cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP-5), 
+             cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP+5), cv::Scalar(255), 1);
 
-    cv::line(centerLine, cv::Point(dist, 0), cv::Point(dist, mask.rows - 1), cv::Scalar(255), 1);
-    cv::line(centerLine, cv::Point(0, height), cv::Point(mask.cols - 1, height), cv::Scalar(255), 1);
+    dist = intersectionPoint.x - Params::WHITE_CENTER_POS;
     
-    dist -= Params::WHITE_CENTER_POS;
-
     if (dist > Params::MAX_WHITE_DIST) dist = Params::MAX_WHITE_DIST;
     if (dist < -Params::MAX_WHITE_DIST) dist = -Params::MAX_WHITE_DIST;
 

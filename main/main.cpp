@@ -90,9 +90,9 @@ inline void main_loop(void* params = nullptr)
         bool whiteDetected = MicroCV2::processWhiteImg(frame, whiteMask, whiteLine, dist, height);
 
         if (pico.photoRequested) {
-            pico.sendPacket(dist, stopReady, frame);
+            pico.sendPacket(dist, stopDetected, frame);
         } else {
-            pico.sendPacket(dist, stopReady);
+            pico.sendPacket(dist, stopDetected);
         }
 
         int64_t currTick = esp_timer_get_time();
@@ -103,7 +103,7 @@ inline void main_loop(void* params = nullptr)
         params.loop_ticks = loop_ticks;
         params.frame = redMask | whiteLine | whiteMask;
         params.white_dist = dist;
-        params.stop_detected = stopPending;
+        params.stop_detected = stopDetected;
         // uart_get_buffered_data_len(UART_NUM, &params.other);
         LCD::output_to_screen(screen, params);
 
