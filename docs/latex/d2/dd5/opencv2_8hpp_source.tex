@@ -1,0 +1,36 @@
+\doxysection{opencv2.\+hpp}
+\hypertarget{opencv2_8hpp_source}{}\label{opencv2_8hpp_source}\index{include/opencv2.hpp@{include/opencv2.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ OPENCV2\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ OPENCV2\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Disable\ warnings}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER\ }\textcolor{comment}{//\ For\ Microsoft\ Visual\ C++}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ warning(push)}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ warning(disable\ :\ 4996)\ }\textcolor{comment}{//\ Example:\ Disable\ deprecated\ function\ warnings}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)\ }\textcolor{comment}{//\ For\ GCC\ and\ Clang}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ push}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wall"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wextra"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wdeprecated-\/declarations"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wdeprecated-\/enum-\/enum-\/conversion"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Include\ OpenCV\ headers}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#undef\ EPS}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}opencv2/core.hpp"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc.hpp"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgcodecs.hpp"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ EPS\ 192}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Restore\ warnings}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ warning(pop)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ GCC\ diagnostic\ pop}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ OPENCV2\_HPP}}
+
+\end{DoxyCode}

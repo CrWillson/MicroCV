@@ -1,0 +1,69 @@
+\doxysection{lcd.\+hpp}
+\hypertarget{lcd_8hpp_source}{}\label{lcd_8hpp_source}\index{include/lcd.hpp@{include/lcd.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Stdlib\ imports}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ LCD\ imports}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}ssd1306.h"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Opencv\ Imports}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}opencv2.hpp"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_l_c_d}{LCD}}\ \{}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *TAG\ =\ \textcolor{stringliteral}{"{}SCREEN"{}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_c_d_1_1_print_params}{PrintParams}}\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ cv::Mat1b\ \mbox{\hyperlink{class_l_c_d_1_1_print_params_a2d4d0b0ef2b2a6fd2d305df51c670048}{frame}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_c_d_1_1_print_params_a8d4d01c72934a9300902d9570cb79424}{loop\_ticks}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ white\_dist;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ stop\_detected;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_c_d_1_1_print_params_a5374a705f6b7af4fc424930221509d70}{other}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{constexpr}\ uint8\_t\ \mbox{\hyperlink{namespace_l_c_d_a0a6e4417b783536d839f94ace590440a}{SCREEN\_WIDTH}}\ =\ 128;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{constexpr}\ uint8\_t\ \mbox{\hyperlink{namespace_l_c_d_a8cddb2da75e01f8fab05b9863f372a75}{SCREEN\_HEIGHT}}\ =\ 64;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}}\ =\ -\/1;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ std::mutex\ \mbox{\hyperlink{namespace_l_c_d_a14bbf3a6c68aa3928fbdc655b47a5ffd}{screenMutex}};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_ad81edfa776335c7857abdeec9ab7ad6c}{lcd\_draw\_string}}(SSD1306\_t\&\ screen,\ std::string\&\ \textcolor{keywordtype}{string},\ \textcolor{keywordtype}{int}\ row\ =\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}});}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_ad81edfa776335c7857abdeec9ab7ad6c}{lcd\_draw\_string}}(SSD1306\_t\&\ screen,\ std::vector<std::string>\&\ lines,\ \textcolor{keywordtype}{int}\ start\_row\ =\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}});}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3}{lcd\_draw\_data}}(SSD1306\_t\&\ screen,\ std::string\ preamble,\ \textcolor{keywordtype}{int}\ data,\ \textcolor{keywordtype}{int}\ row\ =\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}});}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3}{lcd\_draw\_data}}(SSD1306\_t\&\ screen,\ std::string\ preamble,\ \textcolor{keywordtype}{double}\ data,\ \textcolor{keywordtype}{int}\ row\ =\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}});}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3}{lcd\_draw\_data}}(SSD1306\_t\&\ screen,\ std::string\ preamble,\ \textcolor{keywordtype}{bool}\ data,\ \textcolor{keywordtype}{int}\ row\ =\ \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\_ROW}});}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_a82cc27ee62258f4b007ca720410d3288}{lcd\_draw\_matrix}}(SSD1306\_t\&\ screen,\ \textcolor{keyword}{const}\ cv::Mat\&\ bin\_mat);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_l_c_d_a68531092b1716c4e950abe9d657fce21}{output\_to\_screen}}(SSD1306\_t\&\ screen,\ \mbox{\hyperlink{class_l_c_d_1_1_print_params}{PrintParams}}\ params);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,41 @@
+\doxysection{constants.\+hpp}
+\hypertarget{constants_8hpp_source}{}\label{constants_8hpp_source}\index{include/constants.hpp@{include/constants.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ The\ number\ of\ times\ I\ have\ watched\ this\ program\ recompile\ over\ 1000\ files\ has\ nearly\ driven\ me\ insane.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \string~\ Caleb\ Willson,\ 9/2024}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_PWDN\ \ \ \ 32}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_RESET\ \ \ -\/1}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_XCLK\ \ \ \ 0}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_SIOD\ \ \ \ 26}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_SIOC\ \ \ \ 27}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D7\ \ \ \ \ \ 35}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D6\ \ \ \ \ \ 34}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D5\ \ \ \ \ \ 39}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D4\ \ \ \ \ \ 36}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D3\ \ \ \ \ \ 21}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D2\ \ \ \ \ \ 19}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D1\ \ \ \ \ \ 18}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_D0\ \ \ \ \ \ 5}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_VSYNC\ \ \ 25}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_HREF\ \ \ \ 23}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ CAM\_PIN\_PCLK\ \ \ \ 22}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ The\ pin\ to\ write\ to.}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ TX\_GPIO\ GPIO\_NUM\_1}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ UART\_NUM\ UART\_NUM\_0}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{constexpr}\ uint32\_t\ UART\_TX\_BAUD\ =\ 250000;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{constexpr}\ uint8\_t\ IMG\_ROWS\ =\ 96;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{constexpr}\ uint8\_t\ IMG\_COLS\ =\ 96;}
+\DoxyCodeLine{00034\ \textcolor{keyword}{constexpr}\ uint8\_t\ IMG\_BPP\ =\ 2;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{constexpr}\ uint16\_t\ IMG\_SIZE\ =\ IMG\_ROWS\ *\ IMG\_COLS\ *\ IMG\_BPP;}
+
+\end{DoxyCode}

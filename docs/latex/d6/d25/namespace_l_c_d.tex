@@ -1,0 +1,177 @@
+\doxysection{LCD Namespace Reference}
+\hypertarget{namespace_l_c_d}{}\label{namespace_l_c_d}\index{LCD@{LCD}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_l_c_d_1_1_print_params}{Print\+Params}}
+\begin{DoxyCompactList}\small\item\em Parameters which are available to the \doxylink{namespace_l_c_d}{LCD} screen printing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_l_c_d_ad81edfa776335c7857abdeec9ab7ad6c}{lcd\+\_\+draw\+\_\+string}} (SSD1306\+\_\+t \&screen, std\+::string \&string, int row=\mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}})
+\begin{DoxyCompactList}\small\item\em Draws a string to the \doxylink{namespace_l_c_d}{LCD} screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_l_c_d_a1f3e953465cda380a744f12d6e759808}{lcd\+\_\+draw\+\_\+string}} (SSD1306\+\_\+t \&screen, std\+::vector$<$ std\+::string $>$ \&lines, int start\+\_\+row=\mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}})
+\begin{DoxyCompactList}\small\item\em Writes a number of lines to the \doxylink{namespace_l_c_d}{LCD} screen, from top to bottom. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3}{lcd\+\_\+draw\+\_\+data}} (SSD1306\+\_\+t \&screen, std\+::string preamble, int data, int row=\mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}})
+\begin{DoxyCompactList}\small\item\em Draws a string of this format in a row\+: "{}\{preamble\} \{data\}"{}. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_l_c_d_a3494dc1effbe0d935c8ecfb4c9383ea6}\label{namespace_l_c_d_a3494dc1effbe0d935c8ecfb4c9383ea6} 
+void {\bfseries lcd\+\_\+draw\+\_\+data} (SSD1306\+\_\+t \&screen, std\+::string preamble, double data, int row=\mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}})
+\item 
+void \mbox{\hyperlink{namespace_l_c_d_a56b2e4337e6fd91d57386feeef129969}{lcd\+\_\+draw\+\_\+data}} (SSD1306\+\_\+t \&screen, std\+::string preamble, bool data, int row=\mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}})
+\begin{DoxyCompactList}\small\item\em Draws a string of this format in a row\+: "{}\{preamble\} \{data\}"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_l_c_d_a82cc27ee62258f4b007ca720410d3288}{lcd\+\_\+draw\+\_\+matrix}} (SSD1306\+\_\+t \&screen, const cv\+::\+Mat \&bin\+\_\+mat)
+\begin{DoxyCompactList}\small\item\em Writes an Open\+CV matrix to the screen. This also clears the screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_l_c_d_a68531092b1716c4e950abe9d657fce21}{output\+\_\+to\+\_\+screen}} (SSD1306\+\_\+t \&screen, \mbox{\hyperlink{class_l_c_d_1_1_print_params}{Print\+Params}} params)
+\begin{DoxyCompactList}\small\item\em Prints data about the detection process to the \doxylink{namespace_l_c_d}{LCD} screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespace_l_c_d_aa74859c153fc007222ffd64cc9b233ab}\label{namespace_l_c_d_aa74859c153fc007222ffd64cc9b233ab} 
+constexpr const char \texorpdfstring{$\ast$}{*} {\bfseries TAG} = "{}SCREEN"{}
+\item 
+\Hypertarget{namespace_l_c_d_a0a6e4417b783536d839f94ace590440a}\label{namespace_l_c_d_a0a6e4417b783536d839f94ace590440a} 
+constexpr uint8\+\_\+t {\bfseries SCREEN\+\_\+\+WIDTH} = 128
+\begin{DoxyCompactList}\small\item\em The native width of the screen. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_l_c_d_a8cddb2da75e01f8fab05b9863f372a75}\label{namespace_l_c_d_a8cddb2da75e01f8fab05b9863f372a75} 
+constexpr uint8\+\_\+t {\bfseries SCREEN\+\_\+\+HEIGHT} = 64
+\begin{DoxyCompactList}\small\item\em The native heigth of the screen. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_l_c_d_a55a443dea6813bd5300077030e484248}\label{namespace_l_c_d_a55a443dea6813bd5300077030e484248} 
+constexpr int {\bfseries APPEND\+\_\+\+ROW} = -\/1
+\begin{DoxyCompactList}\small\item\em If passed into one of the print functions as a row, prints oen after the previous. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_l_c_d_a14bbf3a6c68aa3928fbdc655b47a5ffd}\label{namespace_l_c_d_a14bbf3a6c68aa3928fbdc655b47a5ffd} 
+static std\+::mutex {\bfseries screen\+Mutex}
+\begin{DoxyCompactList}\small\item\em Lock used to prevent the main thread from drawing to the screen while it is busy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Helper functions for communicating with the \doxylink{namespace_l_c_d}{LCD} screen.
+
+Author\+: Andrew Huffman 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_l_c_d_a56b2e4337e6fd91d57386feeef129969}\index{LCD@{LCD}!lcd\_draw\_data@{lcd\_draw\_data}}
+\index{lcd\_draw\_data@{lcd\_draw\_data}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{lcd\_draw\_data()}{lcd\_draw\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_a56b2e4337e6fd91d57386feeef129969} 
+void LCD\+::lcd\+\_\+draw\+\_\+data (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{std\+::string}]{preamble}{, }\item[{bool}]{data}{, }\item[{int}]{row}{ = {\ttfamily \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}}}}\end{DoxyParamCaption})}
+
+
+
+Draws a string of this format in a row\+: "{}\{preamble\} \{data\}"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The scren to print to. \\
+\hline
+{\em preamble} & The preamble. \\
+\hline
+{\em data} & The data. \\
+\hline
+{\em row} & The row on which to print. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3}\index{LCD@{LCD}!lcd\_draw\_data@{lcd\_draw\_data}}
+\index{lcd\_draw\_data@{lcd\_draw\_data}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{lcd\_draw\_data()}{lcd\_draw\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_acb14552e4b3d091da28fd0a3f5e076d3} 
+void LCD\+::lcd\+\_\+draw\+\_\+data (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{std\+::string}]{preamble}{, }\item[{int}]{data}{, }\item[{int}]{row}{ = {\ttfamily \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}}}}\end{DoxyParamCaption})}
+
+
+
+Draws a string of this format in a row\+: "{}\{preamble\} \{data\}"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The scren to print to. \\
+\hline
+{\em preamble} & The preamble. \\
+\hline
+{\em data} & The data. \\
+\hline
+{\em row} & The row on which to print. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_l_c_d_a82cc27ee62258f4b007ca720410d3288}\index{LCD@{LCD}!lcd\_draw\_matrix@{lcd\_draw\_matrix}}
+\index{lcd\_draw\_matrix@{lcd\_draw\_matrix}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{lcd\_draw\_matrix()}{lcd\_draw\_matrix()}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_a82cc27ee62258f4b007ca720410d3288} 
+void LCD\+::lcd\+\_\+draw\+\_\+matrix (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{const cv\+::\+Mat \&}]{bin\+\_\+mat}{}\end{DoxyParamCaption})}
+
+
+
+Writes an Open\+CV matrix to the screen. This also clears the screen. 
+
+Writes a binary matrix to a provided \doxylink{namespace_l_c_d}{LCD} screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The screen to write to. \\
+\hline
+{\em bin\+\_\+mat} & The matrix to write. Should be a binary mask.\\
+\hline
+{\em screen} & The \doxylink{namespace_l_c_d}{LCD} screen to write to. \\
+\hline
+{\em bin\+\_\+mat} & The binary matrix to write. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_l_c_d_ad81edfa776335c7857abdeec9ab7ad6c}\index{LCD@{LCD}!lcd\_draw\_string@{lcd\_draw\_string}}
+\index{lcd\_draw\_string@{lcd\_draw\_string}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{lcd\_draw\_string()}{lcd\_draw\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_ad81edfa776335c7857abdeec9ab7ad6c} 
+void LCD\+::lcd\+\_\+draw\+\_\+string (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{std\+::string \&}]{string}{, }\item[{int}]{row}{ = {\ttfamily \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}}}}\end{DoxyParamCaption})}
+
+
+
+Draws a string to the \doxylink{namespace_l_c_d}{LCD} screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The screen to draw to. \\
+\hline
+{\em string} & The string. \\
+\hline
+{\em row} & The row of the screen to draw at. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_l_c_d_a1f3e953465cda380a744f12d6e759808}\index{LCD@{LCD}!lcd\_draw\_string@{lcd\_draw\_string}}
+\index{lcd\_draw\_string@{lcd\_draw\_string}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{lcd\_draw\_string()}{lcd\_draw\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_a1f3e953465cda380a744f12d6e759808} 
+void LCD\+::lcd\+\_\+draw\+\_\+string (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{lines}{, }\item[{int}]{start\+\_\+row}{ = {\ttfamily \mbox{\hyperlink{namespace_l_c_d_a55a443dea6813bd5300077030e484248}{APPEND\+\_\+\+ROW}}}}\end{DoxyParamCaption})}
+
+
+
+Writes a number of lines to the \doxylink{namespace_l_c_d}{LCD} screen, from top to bottom. 
+
+Writes a parameter to the \doxylink{namespace_l_c_d}{LCD} screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The screen to write to. \\
+\hline
+{\em lines} & The lines to write to the screen. \\
+\hline
+{\em start\+\_\+row} & The row to start printing on.\\
+\hline
+{\em screen} & The screen to write to. \\
+\hline
+{\em lines} & The lines to write to the screen. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_l_c_d_a68531092b1716c4e950abe9d657fce21}\index{LCD@{LCD}!output\_to\_screen@{output\_to\_screen}}
+\index{output\_to\_screen@{output\_to\_screen}!LCD@{LCD}}
+\doxysubsubsection{\texorpdfstring{output\_to\_screen()}{output\_to\_screen()}}
+{\footnotesize\ttfamily \label{namespace_l_c_d_a68531092b1716c4e950abe9d657fce21} 
+void LCD\+::output\+\_\+to\+\_\+screen (\begin{DoxyParamCaption}\item[{SSD1306\+\_\+t \&}]{screen}{, }\item[{\mbox{\hyperlink{class_l_c_d_1_1_print_params}{Print\+Params}}}]{params}{}\end{DoxyParamCaption})}
+
+
+
+Prints data about the detection process to the \doxylink{namespace_l_c_d}{LCD} screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screen} & The screen to print to. \\
+\hline
+{\em params} & A struct containing values to print to the screen. \\
+\hline
+\end{DoxyParams}
