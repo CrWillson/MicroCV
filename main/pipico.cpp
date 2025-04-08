@@ -122,6 +122,8 @@ void PiPico::process_command(const PicoToEspPacket &packet)
                 Params::STOPBOX_BR_X = static_cast<uint8_t>(packet.data);
             } else if (packet.label == PARAM_STOPBOX_BR_Y) {
                 Params::STOPBOX_BR_Y = static_cast<uint8_t>(packet.data);
+            } else if (packet.label == PARAM_WHITE_CENTER_POS) {
+                Params::WHITE_CENTER_POS = static_cast<uint8_t>(packet.data);
             } else {
                 // Handle unknown parameter
             }

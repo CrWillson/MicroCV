@@ -1,4 +1,5 @@
 #include "microcv2.hpp"
+#include "constants.hpp"
 #include "params.hpp"
 #include <algorithm>
 
@@ -134,6 +135,9 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
     centerLine = cv::Mat::zeros(image.size(), CV_8UC1);
 
+    cv::line(centerLine, cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP-5), 
+             cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP+5), cv::Scalar(255), 1);
+
     // Mask and crop the image in one pass
     for (uint8_t y = Params::WHITE_VERTICAL_CROP; y < image.rows; ++y) {
         for (uint8_t x = 0; x < Params::WHITE_HORIZONTAL_CROP; ++x) {
@@ -197,13 +201,13 @@ bool MicroCV2::processWhiteImg(const cv::Mat& image, cv::Mat1b& mask, cv::Mat1b&
     intersectionPoint.y = Params::WHITE_VERTICAL_CROP;
     intersectionPoint.x = (intersectionPoint.y - y_intercept) / slope;
     cv::line(centerLine, cv::Point(intersectionPoint.x, 0), cv::Point(intersectionPoint.x, mask.rows - 1), cv::Scalar(255), 1);
-    cv::line(centerLine, cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP-5), 
-             cv::Point(Params::WHITE_CENTER_POS, Params::WHITE_VERTICAL_CROP+5), cv::Scalar(255), 1);
-
-    dist = intersectionPoint.x - Params::WHITE_CENTER_POS;
     
-    if (dist > Params::MAX_WHITE_DIST) dist = Params::MAX_WHITE_DIST;
-    if (dist < -Params::MAX_WHITE_DIST) dist = -Params::MAX_WHITE_DIST;
+    dist = intersectionPoint.x - Params::WHITE_CENTER_POS;
+
+    uint8_t MAX_WHITE_DIST = Params::CLAMP_CENTER_POS(IMG_COLS, Params::WHITE_CENTER_POS);
+
+    if (dist > MAX_WHITE_DIST) dist = MAX_WHITE_DIST;
+    if (dist < -MAX_WHITE_DIST) dist = -MAX_WHITE_DIST;
 
     return true;
 }
