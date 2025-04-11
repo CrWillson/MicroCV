@@ -4,7 +4,7 @@ OpenCV project for the AI Thinker ESP32-Cam.
 
 Written by: Caleb Willson and Andrew Huffman
 
-## Instalation Instructions
+## Installation Instructions
 ### Requirements
 This project was tested using:
 

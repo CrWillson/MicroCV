@@ -24,6 +24,7 @@
 /* @license-end */
 </script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+<link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -112,52 +113,398 @@ $(function(){initNavTree('d9/df9/class_pi_pico.html','../../'); initResizable(tr
   <div class="headertitle"><div class="title">PiPico Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class to manage the interaction with the connected Pi Pico.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="../../d4/d31/pipico_8hpp_source.html">pipico.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aee4ddd29d32aaccbd71594409e9d07a9" id="r_aee4ddd29d32aaccbd71594409e9d07a9"><td class="memItemLeft" align="right" valign="top"><a id="aee4ddd29d32aaccbd71594409e9d07a9" name="aee4ddd29d32aaccbd71594409e9d07a9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
+<tr class="memitem:aee4ddd29d32aaccbd71594409e9d07a9" id="r_aee4ddd29d32aaccbd71594409e9d07a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee4ddd29d32aaccbd71594409e9d07a9">init</a> ()</td></tr>
+<tr class="memdesc:aee4ddd29d32aaccbd71594409e9d07a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the pico.  <br /></td></tr>
 <tr class="separator:aee4ddd29d32aaccbd71594409e9d07a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef1b3e6471306b098cc00aa14e18cd07" id="r_aef1b3e6471306b098cc00aa14e18cd07"><td class="memItemLeft" align="right" valign="top"><a id="aef1b3e6471306b098cc00aa14e18cd07" name="aef1b3e6471306b098cc00aa14e18cd07"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sendPacket</b> (const uint8_t dist, const bool stopDetected)</td></tr>
+<tr class="memitem:aef1b3e6471306b098cc00aa14e18cd07" id="r_aef1b3e6471306b098cc00aa14e18cd07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef1b3e6471306b098cc00aa14e18cd07">sendPacket</a> (const uint8_t dist, const bool stopDetected)</td></tr>
+<tr class="memdesc:aef1b3e6471306b098cc00aa14e18cd07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a regular data packet to the Pi Pico.  <br /></td></tr>
 <tr class="separator:aef1b3e6471306b098cc00aa14e18cd07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a378ca91ed2c48df6f17924ff6c4c4839" id="r_a378ca91ed2c48df6f17924ff6c4c4839"><td class="memItemLeft" align="right" valign="top"><a id="a378ca91ed2c48df6f17924ff6c4c4839" name="a378ca91ed2c48df6f17924ff6c4c4839"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sendPacket</b> (const uint8_t dist, const bool stopDetected, const cv::Mat &amp;image)</td></tr>
+<tr class="memitem:a378ca91ed2c48df6f17924ff6c4c4839" id="r_a378ca91ed2c48df6f17924ff6c4c4839"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a378ca91ed2c48df6f17924ff6c4c4839">sendPacket</a> (const uint8_t dist, const bool stopDetected, const cv::Mat &amp;image)</td></tr>
+<tr class="memdesc:a378ca91ed2c48df6f17924ff6c4c4839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a data packet with an image to the Pi Pico.  <br /></td></tr>
 <tr class="separator:a378ca91ed2c48df6f17924ff6c4c4839"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e1ccf2690e35f57bcc1fc4a98f299e3" id="r_a8e1ccf2690e35f57bcc1fc4a98f299e3"><td class="memItemLeft" align="right" valign="top"><a id="a8e1ccf2690e35f57bcc1fc4a98f299e3" name="a8e1ccf2690e35f57bcc1fc4a98f299e3"></a>
-esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>receivePacket</b> ()</td></tr>
+<tr class="memitem:a8e1ccf2690e35f57bcc1fc4a98f299e3" id="r_a8e1ccf2690e35f57bcc1fc4a98f299e3"><td class="memItemLeft" align="right" valign="top">esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e1ccf2690e35f57bcc1fc4a98f299e3">receivePacket</a> ()</td></tr>
+<tr class="memdesc:a8e1ccf2690e35f57bcc1fc4a98f299e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load in a packet from the Pi Pico if one is available.  <br /></td></tr>
 <tr class="separator:a8e1ccf2690e35f57bcc1fc4a98f299e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2088cbd4467167022ff25b5c447dcb59" id="r_a2088cbd4467167022ff25b5c447dcb59"><td class="memItemLeft" align="right" valign="top"><a id="a2088cbd4467167022ff25b5c447dcb59" name="a2088cbd4467167022ff25b5c447dcb59"></a>
-static <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInstance</b> ()</td></tr>
+<tr class="memitem:a2088cbd4467167022ff25b5c447dcb59" id="r_a2088cbd4467167022ff25b5c447dcb59"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2088cbd4467167022ff25b5c447dcb59">getInstance</a> ()</td></tr>
+<tr class="memdesc:a2088cbd4467167022ff25b5c447dcb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Meyer's singleton instance of the <a class="el" href="../../d9/df9/class_pi_pico.html" title="Class to manage the interaction with the connected Pi Pico.">PiPico</a>.  <br /></td></tr>
 <tr class="separator:a2088cbd4467167022ff25b5c447dcb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4c90f12264fc9e0e0989611955f5c781" id="r_a4c90f12264fc9e0e0989611955f5c781"><td class="memItemLeft" align="right" valign="top"><a id="a4c90f12264fc9e0e0989611955f5c781" name="a4c90f12264fc9e0e0989611955f5c781"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>photoRequested</b> = false</td></tr>
+<tr class="memitem:a4c90f12264fc9e0e0989611955f5c781" id="r_a4c90f12264fc9e0e0989611955f5c781"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c90f12264fc9e0e0989611955f5c781">photoRequested</a> = false</td></tr>
+<tr class="memdesc:a4c90f12264fc9e0e0989611955f5c781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the Pi Pico waiting for a photo to be sent to it.  <br /></td></tr>
 <tr class="separator:a4c90f12264fc9e0e0989611955f5c781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a51cd70fa6748a9ce31e43aa7d14a6381" id="r_a51cd70fa6748a9ce31e43aa7d14a6381"><td class="memItemLeft" align="right" valign="top"><a id="a51cd70fa6748a9ce31e43aa7d14a6381" name="a51cd70fa6748a9ce31e43aa7d14a6381"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PiPico</b> (const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;)=delete</td></tr>
+<tr class="memitem:a0dd82a50694d54531527ae8154a773f2" id="r_a0dd82a50694d54531527ae8154a773f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dd82a50694d54531527ae8154a773f2">PiPico</a> ()=default</td></tr>
+<tr class="separator:a0dd82a50694d54531527ae8154a773f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92835a4563996eabd2fcf4dd2b802bba" id="r_a92835a4563996eabd2fcf4dd2b802bba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92835a4563996eabd2fcf4dd2b802bba">~PiPico</a> ()=default</td></tr>
+<tr class="separator:a92835a4563996eabd2fcf4dd2b802bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51cd70fa6748a9ce31e43aa7d14a6381" id="r_a51cd70fa6748a9ce31e43aa7d14a6381"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51cd70fa6748a9ce31e43aa7d14a6381">PiPico</a> (const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;)=delete</td></tr>
 <tr class="separator:a51cd70fa6748a9ce31e43aa7d14a6381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dac5c955f82c006ba29ec0c738c6845" id="r_a8dac5c955f82c006ba29ec0c738c6845"><td class="memItemLeft" align="right" valign="top"><a id="a8dac5c955f82c006ba29ec0c738c6845" name="a8dac5c955f82c006ba29ec0c738c6845"></a>
-<a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;)=delete</td></tr>
+<tr class="memitem:a8dac5c955f82c006ba29ec0c738c6845" id="r_a8dac5c955f82c006ba29ec0c738c6845"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dac5c955f82c006ba29ec0c738c6845">operator=</a> (const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;)=delete</td></tr>
 <tr class="separator:a8dac5c955f82c006ba29ec0c738c6845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcac37c89d78f4e94d821e004def9ce6" id="r_adcac37c89d78f4e94d821e004def9ce6"><td class="memItemLeft" align="right" valign="top"><a id="adcac37c89d78f4e94d821e004def9ce6" name="adcac37c89d78f4e94d821e004def9ce6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>process_command</b> (const <a class="el" href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a> &amp;packet)</td></tr>
+<tr class="memitem:adcac37c89d78f4e94d821e004def9ce6" id="r_adcac37c89d78f4e94d821e004def9ce6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcac37c89d78f4e94d821e004def9ce6">process_command</a> (const <a class="el" href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a> &amp;packet)</td></tr>
+<tr class="memdesc:adcac37c89d78f4e94d821e004def9ce6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process the incoming command from the Pi Pico.  <br /></td></tr>
 <tr class="separator:adcac37c89d78f4e94d821e004def9ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae62c8edfcf382e91c8fef0b9943ae7b9" id="r_ae62c8edfcf382e91c8fef0b9943ae7b9"><td class="memItemLeft" align="right" valign="top"><a id="ae62c8edfcf382e91c8fef0b9943ae7b9" name="ae62c8edfcf382e91c8fef0b9943ae7b9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>print_matrix</b> (const cv::Mat &amp;mat)</td></tr>
+<tr class="memitem:ae62c8edfcf382e91c8fef0b9943ae7b9" id="r_ae62c8edfcf382e91c8fef0b9943ae7b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae62c8edfcf382e91c8fef0b9943ae7b9">print_matrix</a> (const cv::Mat &amp;mat)</td></tr>
+<tr class="memdesc:ae62c8edfcf382e91c8fef0b9943ae7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug function used for printing an entire OpenCV matrix to the Pi Pico.  <br /></td></tr>
 <tr class="separator:ae62c8edfcf382e91c8fef0b9943ae7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to manage the interaction with the connected Pi Pico. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d31/pipico_8hpp_source.html#l00023">23</a> of file <a class="el" href="../../d4/d31/pipico_8hpp_source.html">pipico.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0dd82a50694d54531527ae8154a773f2" name="a0dd82a50694d54531527ae8154a773f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dd82a50694d54531527ae8154a773f2">&#9670;&#160;</a></span>PiPico() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PiPico::PiPico </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a92835a4563996eabd2fcf4dd2b802bba" name="a92835a4563996eabd2fcf4dd2b802bba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92835a4563996eabd2fcf4dd2b802bba">&#9670;&#160;</a></span>~PiPico()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PiPico::~PiPico </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a51cd70fa6748a9ce31e43aa7d14a6381" name="a51cd70fa6748a9ce31e43aa7d14a6381"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51cd70fa6748a9ce31e43aa7d14a6381">&#9670;&#160;</a></span>PiPico() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PiPico::PiPico </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2088cbd4467167022ff25b5c447dcb59" name="a2088cbd4467167022ff25b5c447dcb59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2088cbd4467167022ff25b5c447dcb59">&#9670;&#160;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp; PiPico::getInstance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Meyer's singleton instance of the <a class="el" href="../../d9/df9/class_pi_pico.html" title="Class to manage the interaction with the connected Pi Pico.">PiPico</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d9/df9/class_pi_pico.html" title="Class to manage the interaction with the connected Pi Pico.">PiPico</a>&amp; </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d31/pipico_8hpp_source.html#l00030">30</a> of file <a class="el" href="../../d4/d31/pipico_8hpp_source.html">pipico.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aee4ddd29d32aaccbd71594409e9d07a9" name="aee4ddd29d32aaccbd71594409e9d07a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee4ddd29d32aaccbd71594409e9d07a9">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiPico::init </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the pico. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00010">10</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8dac5c955f82c006ba29ec0c738c6845" name="a8dac5c955f82c006ba29ec0c738c6845"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dac5c955f82c006ba29ec0c738c6845">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp; PiPico::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d9/df9/class_pi_pico.html">PiPico</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae62c8edfcf382e91c8fef0b9943ae7b9" name="ae62c8edfcf382e91c8fef0b9943ae7b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae62c8edfcf382e91c8fef0b9943ae7b9">&#9670;&#160;</a></span>print_matrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiPico::print_matrix </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Mat &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Debug function used for printing an entire OpenCV matrix to the Pi Pico. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>- The matrix to print </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adcac37c89d78f4e94d821e004def9ce6" name="adcac37c89d78f4e94d821e004def9ce6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcac37c89d78f4e94d821e004def9ce6">&#9670;&#160;</a></span>process_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiPico::process_command </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>packet</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Process the incoming command from the Pi Pico. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8e1ccf2690e35f57bcc1fc4a98f299e3" name="a8e1ccf2690e35f57bcc1fc4a98f299e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e1ccf2690e35f57bcc1fc4a98f299e3">&#9670;&#160;</a></span>receivePacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">esp_err_t PiPico::receivePacket </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load in a packet from the Pi Pico if one is available. </p>
+<p>If not enough data is available in the UART buffer for a full packet, this function will simply do nothing.</p>
+<dl class="section return"><dt>Returns</dt><dd>esp_err_t - ESP_OK if a packet was read in </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aef1b3e6471306b098cc00aa14e18cd07" name="aef1b3e6471306b098cc00aa14e18cd07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef1b3e6471306b098cc00aa14e18cd07">&#9670;&#160;</a></span>sendPacket() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiPico::sendPacket </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t</td>          <td class="paramname"><span class="paramname"><em>dist</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>stopDetected</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a regular data packet to the Pi Pico. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dist</td><td>- The distance to the white line </td></tr>
+    <tr><td class="paramname">stopDetected</td><td>- Was a stop detected </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00028">28</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a378ca91ed2c48df6f17924ff6c4c4839" name="a378ca91ed2c48df6f17924ff6c4c4839"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a378ca91ed2c48df6f17924ff6c4c4839">&#9670;&#160;</a></span>sendPacket() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiPico::sendPacket </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t</td>          <td class="paramname"><span class="paramname"><em>dist</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>stopDetected</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cv::Mat &amp;</td>          <td class="paramname"><span class="paramname"><em>image</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a data packet with an image to the Pi Pico. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dist</td><td>- the distance to the white line </td></tr>
+    <tr><td class="paramname">stopDetected</td><td>- Was a stop detected </td></tr>
+    <tr><td class="paramname">image</td><td>- The image to send </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d12/pipico_8cpp_source.html#l00041">41</a> of file <a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4c90f12264fc9e0e0989611955f5c781" name="a4c90f12264fc9e0e0989611955f5c781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c90f12264fc9e0e0989611955f5c781">&#9670;&#160;</a></span>photoRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PiPico::photoRequested = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Is the Pi Pico waiting for a photo to be sent to it. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d4/d31/pipico_8hpp_source.html#l00067">67</a> of file <a class="el" href="../../d4/d31/pipico_8hpp_source.html">pipico.hpp</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="../../d4/d31/pipico_8hpp_source.html">pipico.hpp</a></li>
-<li>main/<b>pipico.cpp</b></li>
+<li>main/<a class="el" href="../../d4/d12/pipico_8cpp_source.html">pipico.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

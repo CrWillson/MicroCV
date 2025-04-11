@@ -24,6 +24,7 @@
 /* @license-end */
 </script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+<link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -106,9 +107,9 @@ $(function(){initNavTree('d0/d8a/camera_8hpp_source.html','../../'); initResizab
   <div class="headertitle"><div class="title">camera.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<a href="../../d0/d8a/camera_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;opencv2.hpp&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/dd5/opencv2_8hpp.html">opencv2.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;freertos/FreeRTOS.h&quot;</span></div>
@@ -116,27 +117,31 @@ $(function(){initNavTree('d0/d8a/camera_8hpp_source.html','../../'); initResizab
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;freertos/portmacro.h&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;esp_camera.h&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;esp_log.h&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;constants.hpp&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/dad/constants_8hpp.html">constants.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="../../d3/d98/namespace_e_s_p_camera.html">   13</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d3/d98/namespace_e_s_p_camera.html">ESPCamera</a> {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *TAG = <span class="stringliteral">&quot;CAMERA&quot;</span>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="../../d3/d98/namespace_e_s_p_camera.html#a5c7d7a53088e2f661f9612fe4f77ea04">   15</a></span>    <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="../../d3/d98/namespace_e_s_p_camera.html#a5c7d7a53088e2f661f9612fe4f77ea04">TAG</a> = <span class="stringliteral">&quot;CAMERA&quot;</span>;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d98/namespace_e_s_p_camera.html#ab5738921f01f4a7c2c63e75404a1a49f">config_cam</a>();</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    esp_err_t get_frame(cv::Mat&amp; image);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    esp_err_t <a class="code hl_function" href="../../d3/d98/namespace_e_s_p_camera.html#a4e9b5d2aa422ac863f5531e7aa2a3e88">get_frame</a>(cv::Mat&amp; image);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
 </div>
-<div class="ttc" id="anamespace_e_s_p_camera_html"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html">ESPCamera</a></div><div class="ttdef"><b>Definition</b> camera.hpp:13</div></div>
-<div class="ttc" id="anamespace_e_s_p_camera_html_ab5738921f01f4a7c2c63e75404a1a49f"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html#ab5738921f01f4a7c2c63e75404a1a49f">ESPCamera::config_cam</a></div><div class="ttdeci">void config_cam()</div><div class="ttdoc">Configures the ESP-32-CAM.</div><div class="ttdef"><b>Definition</b> camera.cpp:4</div></div>
+<div class="ttc" id="aconstants_8hpp_html"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html">constants.hpp</a></div></div>
+<div class="ttc" id="anamespace_e_s_p_camera_html"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html">ESPCamera</a></div><div class="ttdef"><b>Definition</b> <a href="#l00013">camera.hpp:13</a></div></div>
+<div class="ttc" id="anamespace_e_s_p_camera_html_a4e9b5d2aa422ac863f5531e7aa2a3e88"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html#a4e9b5d2aa422ac863f5531e7aa2a3e88">ESPCamera::get_frame</a></div><div class="ttdeci">esp_err_t get_frame(cv::Mat &amp;image)</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d6b/camera_8cpp_source.html#l00046">camera.cpp:46</a></div></div>
+<div class="ttc" id="anamespace_e_s_p_camera_html_a5c7d7a53088e2f661f9612fe4f77ea04"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html#a5c7d7a53088e2f661f9612fe4f77ea04">ESPCamera::TAG</a></div><div class="ttdeci">constexpr const char * TAG</div><div class="ttdef"><b>Definition</b> <a href="#l00015">camera.hpp:15</a></div></div>
+<div class="ttc" id="anamespace_e_s_p_camera_html_ab5738921f01f4a7c2c63e75404a1a49f"><div class="ttname"><a href="../../d3/d98/namespace_e_s_p_camera.html#ab5738921f01f4a7c2c63e75404a1a49f">ESPCamera::config_cam</a></div><div class="ttdeci">void config_cam()</div><div class="ttdoc">Configures the ESP-32-CAM.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/d6b/camera_8cpp_source.html#l00004">camera.cpp:4</a></div></div>
+<div class="ttc" id="aopencv2_8hpp_html"><div class="ttname"><a href="../../d2/dd5/opencv2_8hpp.html">opencv2.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>camera.hpp</b></li>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d0/d8a/camera_8hpp.html">camera.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

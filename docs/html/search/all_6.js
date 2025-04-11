@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['other_0',['other',['../d7/de6/class_l_c_d_1_1_print_params.html#a5374a705f6b7af4fc424930221509d70',1,'LCD::PrintParams']]],
-  ['output_5fto_5fscreen_1',['output_to_screen',['../d6/d25/namespace_l_c_d.html#a68531092b1716c4e950abe9d657fce21',1,'LCD']]]
+  ['generatecolorbars_0',['generateColorBars',['../d4/d21/namespace_micro_c_v2.html#adb9c9990a7819d251c0fcb2cf24e1e89',1,'MicroCV2']]],
+  ['get_5fframe_1',['get_frame',['../d3/d98/namespace_e_s_p_camera.html#a4e9b5d2aa422ac863f5531e7aa2a3e88',1,'ESPCamera']]],
+  ['getinstance_2',['getInstance',['../d9/df9/class_pi_pico.html#a2088cbd4467167022ff25b5c447dcb59',1,'PiPico']]]
 ];

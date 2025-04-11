@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MicroCV: Main Page</title>
+<title>MicroCV: MicroCV</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -24,6 +24,7 @@
 /* @license-end */
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -102,10 +103,103 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">MicroCV Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">MicroCV </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a></p>
+<p>OpenCV project for the AI Thinker ESP32-Cam.</p>
+<p>Written by: Caleb Willson and Andrew Huffman</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Installation Instructions</h1>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Requirements</h2>
+<p>This project was tested using:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft"><b>Dependency</b>   </th><th class="markdownTableHeadLeft"><b>Version</b>   </th><th class="markdownTableHeadLeft"><b>Download/Instructions</b>    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><b>gcc</b>   </td><td class="markdownTableBodyLeft">14.2.0   </td><td class="markdownTableBodyLeft"><a href="https://www.freecodecamp.org/news/how-to-install-c-and-cpp-compiler-on-windows/">Instructions</a>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><b>cmake</b>   </td><td class="markdownTableBodyLeft">3.24.0   </td><td class="markdownTableBodyLeft"><a href="https://cmake.org/download/">Download</a>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><b>git</b>   </td><td class="markdownTableBodyLeft">2.39.2.windows.1   </td><td class="markdownTableBodyLeft"><a href="https://git-scm.com/download/win">Download</a>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><b>ESP-IDF VSCode extension</b>   </td><td class="markdownTableBodyLeft">v1.8.1   </td><td class="markdownTableBodyLeft"><a href="https://marketplace.visualstudio.com/items?itemName=espressif.esp-idf-extension">Installer</a>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><b>ESP-IDF Tools</b>   </td><td class="markdownTableBodyLeft">v5.3.1   </td><td class="markdownTableBodyLeft"><a href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/windows-setup.html">Download</a>   </td></tr>
+</table>
+<p>Note that this project may work with older or newer versions of these dependencies. These are only the versions project was tested with.</p>
+<p><b>The C++ and CMake VSCode extensions are also necessary.</b></p>
+<blockquote class="doxtable">
+<p>GCC, Cmake, and git should be installed with the default options to ensure the greatest chance of compatability. Any custom settings in these programs have not been tested or documented. </p>
+</blockquote>
+<h2><a class="anchor" id="autotoc_md3"></a>
+ESP-IDF Tools Setup</h2>
+<p>To set up the ESP-IDF toolchain:</p>
+<ol type="1">
+<li>Download the ESP-IDF Tools Installer listed above.</li>
+<li>Scroll down to where you see <code>ESP-IDF Tools Installer</code> and click on the link labled <code>Windows Installer Download</code>.</li>
+<li>Click the top download link labled <code>Universal Online Installer</code> and run the installer.</li>
+<li>Continue through the installer and keep the default options and filepaths. <blockquote class="doxtable">
+<p>When you reach the <b>Version of ESP-IDF</b> selection, make sure <b>v5.3.1 (release version -.zip archive download)</b> is selected. </p>
+</blockquote>
+</li>
+</ol>
+<blockquote class="doxtable">
+<p>When you reach the <b>Select Components</b> page, make sure <b>Full installation</b> is selected. </p>
+</blockquote>
+<ol type="1">
+<li>Finish the installation.</li>
+</ol>
+<p>If all of the options were kept as the default, there should be two important filepaths to remember: </p><div class="fragment"><div class="line"> (bash)</div>
+<div class="line">C:\Espressif\frameworks\esp-idf-v5.3.1-2</div>
+<div class="line">C:\Users\USERNAME\.espressif</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+ESP-IDF VSCode Extension Setup</h2>
+<p>To set up the ESP-IDF VSCode extension:</p>
+<ol type="1">
+<li>Install the ESP-IDF extension from the link above or VSCode's extension manager.</li>
+<li>If the configure page does not automatically open, select the new ESP-IDF icon on the lefthand column then select <code>Configure ESP-IDF Extension</code> in the lefthand commands menu.</li>
+<li>Select <code>Express</code>.</li>
+<li>Enter the following options:<ul>
+<li>Select download server: <b>Github</b></li>
+<li>Select ESP-IDFF version: <b>Find ESP-IDF in your system</b></li>
+<li>Enter ESP-IDF directory (IDF_PATH): **C:\Espressif\frameworks\esp-idf-v5.3.1-2**</li>
+<li>Enter ESP-IDF Tools directory (IDF_TOOLS_PATH): **C:\Users\USERNAME\.espressif**</li>
+</ul>
+</li>
+</ol>
+<ol type="1">
+<li>Select <code>Install</code> and wait until you see a menu saying <code>Quick actions</code>.</li>
+<li>Make sure the ESP32-Cam is plugged into the computer.</li>
+<li><p class="startli">On the settings bar along the bottom of the window, do the following:</p><ol type="a">
+<li>Select the icon of a plug and chose the USB port that the ESP32-Cam is plugged into. It should auto detect the ESP32 and suggest which one to use but it might not.</li>
+<li>Select the star icon and choose the <code>UART</code> flash method.</li>
+<li>Select the wrench icon to begin the initial build.</li>
+</ol>
+<p class="startli">If the project fails to build, try the following:</p><ul>
+<li>Check that CMake is using the right generator:<ul>
+<li>Enter the VSCode command menu (Default Key: F1)</li>
+<li>Enter the command: <code>CMake: Open Cmake Tools Extension Settings</code></li>
+<li>Search for the setting: <code>CMake: Generator</code></li>
+<li>Enter <code>Ninja</code> into the setting.</li>
+<li>Press enter to save the setting.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Delete the build directory:<ul>
+<li>You can either do this by selecting the trash can icon on the bottom settings bar or by manually deleting the build folder in the top level directory.</li>
+<li>In general, if the project fails to build, this is usually a good first step.</li>
+</ul>
+</li>
+</ul>
+<p>Settle in. <em>The first build will take a while</em>.</p>
+<p>Once the first build has finished, it can be flashed to the ESP32-Cam using the lightning bolt button on the bottom settings bar. </p>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->

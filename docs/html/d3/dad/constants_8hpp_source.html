@@ -24,6 +24,7 @@
 /* @license-end */
 </script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+<link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -106,47 +107,52 @@ $(function(){initNavTree('d3/dad/constants_8hpp_source.html','../../'); initResi
   <div class="headertitle"><div class="title">constants.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<a href="../../d3/dad/constants_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// The number of times I have watched this program recompile over 1000 files has nearly driven me insane.</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// ~ Caleb Willson, 9/2024</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define CAM_PIN_PWDN    32</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define CAM_PIN_RESET   -1</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define CAM_PIN_XCLK    0</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define CAM_PIN_SIOD    26</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define CAM_PIN_SIOC    27</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#ac6ba9797866eb0bbd34cad17bbec8963">    8</a></span><span class="preprocessor">#define CAM_PIN_PWDN    32</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a01cfe37e742860a4bab27f413cac6256">    9</a></span><span class="preprocessor">#define CAM_PIN_RESET   -1</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#ab033bfe6acb2e8489842d0c676a24829">   10</a></span><span class="preprocessor">#define CAM_PIN_XCLK    0</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a0737a0d8c9fab228d60740e0601d8855">   11</a></span><span class="preprocessor">#define CAM_PIN_SIOD    26</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a8304a9f5f389bfff008ec819326d5993">   12</a></span><span class="preprocessor">#define CAM_PIN_SIOC    27</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define CAM_PIN_D7      35</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#define CAM_PIN_D6      34</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define CAM_PIN_D5      39</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define CAM_PIN_D4      36</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#define CAM_PIN_D3      21</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define CAM_PIN_D2      19</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define CAM_PIN_D1      18</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define CAM_PIN_D0      5</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#define CAM_PIN_VSYNC   25</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#define CAM_PIN_HREF    23</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#define CAM_PIN_PCLK    22</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a140a48794b1b871f93b54892756f702c">   14</a></span><span class="preprocessor">#define CAM_PIN_D7      35</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#ae793722813bdf0cccb00c5a61ab6ca7d">   15</a></span><span class="preprocessor">#define CAM_PIN_D6      34</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a33c5b0b4213744780dcad7a4eaa44d55">   16</a></span><span class="preprocessor">#define CAM_PIN_D5      39</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#aa83b50b2abe56aaef676545fd72e6d65">   17</a></span><span class="preprocessor">#define CAM_PIN_D4      36</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#af9fde698eafdf2f7d9054a8219340144">   18</a></span><span class="preprocessor">#define CAM_PIN_D3      21</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#af714c463efd883394ce3f3c3349f2cdd">   19</a></span><span class="preprocessor">#define CAM_PIN_D2      19</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a5d86ac3c8646f39aa63bf8621771799e">   20</a></span><span class="preprocessor">#define CAM_PIN_D1      18</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#ad01ad0c3cb8a549add333d53f667ac86">   21</a></span><span class="preprocessor">#define CAM_PIN_D0      5</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a2445a99da2723c741f7fc8836394814d">   22</a></span><span class="preprocessor">#define CAM_PIN_VSYNC   25</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#aa8c4bb79121b6f1648c3eccbd18ecb9d">   23</a></span><span class="preprocessor">#define CAM_PIN_HREF    23</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a5ae9bde4afbaad90e5ccd1cf7f7891c8">   24</a></span><span class="preprocessor">#define CAM_PIN_PCLK    22</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// The pin to write to.</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#define TX_GPIO GPIO_NUM_1</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define UART_NUM UART_NUM_0</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">constexpr</span> uint32_t UART_TX_BAUD = 250000;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#ad87eb6d6d761033354c030e63d461e4b">   28</a></span><span class="preprocessor">#define TX_GPIO GPIO_NUM_1</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a49dcd593bb4dd55620e7c08581f8e2ad">   29</a></span><span class="preprocessor">#define UART_NUM UART_NUM_0</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#aa212a331315584211e42dc2640be4ff2">   30</a></span><span class="keyword">constexpr</span> uint32_t <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#aa212a331315584211e42dc2640be4ff2">UART_TX_BAUD</a> = 250000;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">constexpr</span> uint8_t IMG_ROWS = 96;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">constexpr</span> uint8_t IMG_COLS = 96;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">constexpr</span> uint8_t IMG_BPP = 2;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">constexpr</span> uint16_t IMG_SIZE = IMG_ROWS * IMG_COLS * IMG_BPP;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#aebf9b703c49254e2a9aeef838eb73065">   32</a></span><span class="keyword">constexpr</span> uint8_t <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#aebf9b703c49254e2a9aeef838eb73065">IMG_ROWS</a> = 96;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a6f10591bed03b14ed397ff930397c7c3">   33</a></span><span class="keyword">constexpr</span> uint8_t <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#a6f10591bed03b14ed397ff930397c7c3">IMG_COLS</a> = 96;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a7b3599e5c8f70f2edee786db976a9b16">   34</a></span><span class="keyword">constexpr</span> uint8_t <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#a7b3599e5c8f70f2edee786db976a9b16">IMG_BPP</a> = 2;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="../../d3/dad/constants_8hpp.html#a221efc36c51ed478b1697c8c444f09a1">   35</a></span><span class="keyword">constexpr</span> uint16_t <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#a221efc36c51ed478b1697c8c444f09a1">IMG_SIZE</a> = <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#aebf9b703c49254e2a9aeef838eb73065">IMG_ROWS</a> * <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#a6f10591bed03b14ed397ff930397c7c3">IMG_COLS</a> * <a class="code hl_variable" href="../../d3/dad/constants_8hpp.html#a7b3599e5c8f70f2edee786db976a9b16">IMG_BPP</a>;</div>
+<div class="ttc" id="aconstants_8hpp_html_a221efc36c51ed478b1697c8c444f09a1"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html#a221efc36c51ed478b1697c8c444f09a1">IMG_SIZE</a></div><div class="ttdeci">constexpr uint16_t IMG_SIZE</div><div class="ttdef"><b>Definition</b> <a href="#l00035">constants.hpp:35</a></div></div>
+<div class="ttc" id="aconstants_8hpp_html_a6f10591bed03b14ed397ff930397c7c3"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html#a6f10591bed03b14ed397ff930397c7c3">IMG_COLS</a></div><div class="ttdeci">constexpr uint8_t IMG_COLS</div><div class="ttdef"><b>Definition</b> <a href="#l00033">constants.hpp:33</a></div></div>
+<div class="ttc" id="aconstants_8hpp_html_a7b3599e5c8f70f2edee786db976a9b16"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html#a7b3599e5c8f70f2edee786db976a9b16">IMG_BPP</a></div><div class="ttdeci">constexpr uint8_t IMG_BPP</div><div class="ttdef"><b>Definition</b> <a href="#l00034">constants.hpp:34</a></div></div>
+<div class="ttc" id="aconstants_8hpp_html_aa212a331315584211e42dc2640be4ff2"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html#aa212a331315584211e42dc2640be4ff2">UART_TX_BAUD</a></div><div class="ttdeci">constexpr uint32_t UART_TX_BAUD</div><div class="ttdef"><b>Definition</b> <a href="#l00030">constants.hpp:30</a></div></div>
+<div class="ttc" id="aconstants_8hpp_html_aebf9b703c49254e2a9aeef838eb73065"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html#aebf9b703c49254e2a9aeef838eb73065">IMG_ROWS</a></div><div class="ttdeci">constexpr uint8_t IMG_ROWS</div><div class="ttdef"><b>Definition</b> <a href="#l00032">constants.hpp:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>constants.hpp</b></li>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d3/dad/constants_8hpp.html">constants.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

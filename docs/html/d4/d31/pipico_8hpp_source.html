@@ -24,6 +24,7 @@
 /* @license-end */
 </script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+<link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -106,7 +107,7 @@ $(function(){initNavTree('d4/d31/pipico_8hpp_source.html','../../'); initResizab
   <div class="headertitle"><div class="title">pipico.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<a href="../../d4/d31/pipico_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
@@ -119,48 +120,65 @@ $(function(){initNavTree('d4/d31/pipico_8hpp_source.html','../../'); initResizab
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;freertos/task.h&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;freertos/portmacro.h&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;params.hpp&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;constants.hpp&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;opencv2.hpp&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;communication_types.hpp&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html">   19</a></span><span class="keyword">class </span>PiPico {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">static</span> PiPico&amp; getInstance() {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">static</span> PiPico instance;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">return</span> instance;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> init();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> sendPacket(<span class="keyword">const</span> uint8_t dist, <span class="keyword">const</span> <span class="keywordtype">bool</span> stopDetected);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">void</span> sendPacket(<span class="keyword">const</span> uint8_t dist, <span class="keyword">const</span> <span class="keywordtype">bool</span> stopDetected, <span class="keyword">const</span> cv::Mat &amp;image);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    esp_err_t receivePacket();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">bool</span> photoRequested = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    PiPico() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    ~PiPico() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    PiPico(<span class="keyword">const</span> PiPico&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    PiPico&amp; operator=(<span class="keyword">const</span> PiPico&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> process_command(<span class="keyword">const</span> <a class="code hl_struct" href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a>&amp; packet);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">void</span> print_matrix(<span class="keyword">const</span> cv::Mat&amp; mat);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="../../d9/d64/params_8hpp.html">params.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="../../d3/dad/constants_8hpp.html">constants.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/dd5/opencv2_8hpp.html">opencv2.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="../../de/d69/communication__types_8hpp.html">communication_types.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span></div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html">   23</a></span><span class="keyword">class </span><a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a2088cbd4467167022ff25b5c447dcb59">   30</a></span>    <span class="keyword">static</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a>&amp; <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a2088cbd4467167022ff25b5c447dcb59">getInstance</a>() {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keyword">static</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a> instance;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">return</span> instance;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
 </div>
-<div class="ttc" id="astruct_pico_to_esp_packet_html"><div class="ttname"><a href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a></div><div class="ttdef"><b>Definition</b> communication_types.hpp:54</div></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#aee4ddd29d32aaccbd71594409e9d07a9">init</a>();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#aef1b3e6471306b098cc00aa14e18cd07">sendPacket</a>(<span class="keyword">const</span> uint8_t dist, <span class="keyword">const</span> <span class="keywordtype">bool</span> stopDetected);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#aef1b3e6471306b098cc00aa14e18cd07">sendPacket</a>(<span class="keyword">const</span> uint8_t dist, <span class="keyword">const</span> <span class="keywordtype">bool</span> stopDetected, <span class="keyword">const</span> cv::Mat &amp;image);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    esp_err_t <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a8e1ccf2690e35f57bcc1fc4a98f299e3">receivePacket</a>();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a4c90f12264fc9e0e0989611955f5c781">   67</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="../../d9/df9/class_pi_pico.html#a4c90f12264fc9e0e0989611955f5c781">photoRequested</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">   70</a></span>    <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a92835a4563996eabd2fcf4dd2b802bba">   71</a></span>    <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a92835a4563996eabd2fcf4dd2b802bba">~PiPico</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a51cd70fa6748a9ce31e43aa7d14a6381">   73</a></span>    <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a51cd70fa6748a9ce31e43aa7d14a6381">PiPico</a>(<span class="keyword">const</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../d9/df9/class_pi_pico.html#a8dac5c955f82c006ba29ec0c738c6845">   74</a></span>    <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a>&amp; <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a8dac5c955f82c006ba29ec0c738c6845">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#adcac37c89d78f4e94d821e004def9ce6">process_command</a>(<span class="keyword">const</span> <a class="code hl_struct" href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a>&amp; packet);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/df9/class_pi_pico.html#ae62c8edfcf382e91c8fef0b9943ae7b9">print_matrix</a>(<span class="keyword">const</span> cv::Mat&amp; mat);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>};</div>
+</div>
+<div class="ttc" id="aclass_pi_pico_html_a0dd82a50694d54531527ae8154a773f2"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a0dd82a50694d54531527ae8154a773f2">PiPico::PiPico</a></div><div class="ttdeci">PiPico()=default</div></div>
+<div class="ttc" id="aclass_pi_pico_html_a2088cbd4467167022ff25b5c447dcb59"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a2088cbd4467167022ff25b5c447dcb59">PiPico::getInstance</a></div><div class="ttdeci">static PiPico &amp; getInstance()</div><div class="ttdoc">Get the Meyer&#39;s singleton instance of the PiPico.</div><div class="ttdef"><b>Definition</b> <a href="#l00030">pipico.hpp:30</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_a4c90f12264fc9e0e0989611955f5c781"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a4c90f12264fc9e0e0989611955f5c781">PiPico::photoRequested</a></div><div class="ttdeci">bool photoRequested</div><div class="ttdoc">Is the Pi Pico waiting for a photo to be sent to it.</div><div class="ttdef"><b>Definition</b> <a href="#l00067">pipico.hpp:67</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_a51cd70fa6748a9ce31e43aa7d14a6381"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a51cd70fa6748a9ce31e43aa7d14a6381">PiPico::PiPico</a></div><div class="ttdeci">PiPico(const PiPico &amp;)=delete</div></div>
+<div class="ttc" id="aclass_pi_pico_html_a8dac5c955f82c006ba29ec0c738c6845"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a8dac5c955f82c006ba29ec0c738c6845">PiPico::operator=</a></div><div class="ttdeci">PiPico &amp; operator=(const PiPico &amp;)=delete</div></div>
+<div class="ttc" id="aclass_pi_pico_html_a8e1ccf2690e35f57bcc1fc4a98f299e3"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a8e1ccf2690e35f57bcc1fc4a98f299e3">PiPico::receivePacket</a></div><div class="ttdeci">esp_err_t receivePacket()</div><div class="ttdoc">Load in a packet from the Pi Pico if one is available.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d12/pipico_8cpp_source.html#l00058">pipico.cpp:58</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_a92835a4563996eabd2fcf4dd2b802bba"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#a92835a4563996eabd2fcf4dd2b802bba">PiPico::~PiPico</a></div><div class="ttdeci">~PiPico()=default</div></div>
+<div class="ttc" id="aclass_pi_pico_html_adcac37c89d78f4e94d821e004def9ce6"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#adcac37c89d78f4e94d821e004def9ce6">PiPico::process_command</a></div><div class="ttdeci">void process_command(const PicoToEspPacket &amp;packet)</div><div class="ttdoc">Process the incoming command from the Pi Pico.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d12/pipico_8cpp_source.html#l00097">pipico.cpp:97</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_ae62c8edfcf382e91c8fef0b9943ae7b9"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#ae62c8edfcf382e91c8fef0b9943ae7b9">PiPico::print_matrix</a></div><div class="ttdeci">void print_matrix(const cv::Mat &amp;mat)</div><div class="ttdoc">Debug function used for printing an entire OpenCV matrix to the Pi Pico.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d12/pipico_8cpp_source.html#l00136">pipico.cpp:136</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_aee4ddd29d32aaccbd71594409e9d07a9"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#aee4ddd29d32aaccbd71594409e9d07a9">PiPico::init</a></div><div class="ttdeci">void init()</div><div class="ttdoc">Initialize the pico.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d12/pipico_8cpp_source.html#l00010">pipico.cpp:10</a></div></div>
+<div class="ttc" id="aclass_pi_pico_html_aef1b3e6471306b098cc00aa14e18cd07"><div class="ttname"><a href="../../d9/df9/class_pi_pico.html#aef1b3e6471306b098cc00aa14e18cd07">PiPico::sendPacket</a></div><div class="ttdeci">void sendPacket(const uint8_t dist, const bool stopDetected)</div><div class="ttdoc">Send a regular data packet to the Pi Pico.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d12/pipico_8cpp_source.html#l00028">pipico.cpp:28</a></div></div>
+<div class="ttc" id="acommunication__types_8hpp_html"><div class="ttname"><a href="../../de/d69/communication__types_8hpp.html">communication_types.hpp</a></div></div>
+<div class="ttc" id="aconstants_8hpp_html"><div class="ttname"><a href="../../d3/dad/constants_8hpp.html">constants.hpp</a></div></div>
+<div class="ttc" id="aopencv2_8hpp_html"><div class="ttname"><a href="../../d2/dd5/opencv2_8hpp.html">opencv2.hpp</a></div></div>
+<div class="ttc" id="aparams_8hpp_html"><div class="ttname"><a href="../../d9/d64/params_8hpp.html">params.hpp</a></div></div>
+<div class="ttc" id="astruct_pico_to_esp_packet_html"><div class="ttname"><a href="../../dc/d61/struct_pico_to_esp_packet.html">PicoToEspPacket</a></div><div class="ttdef"><b>Definition</b> <a href="../../de/d69/communication__types_8hpp_source.html#l00053">communication_types.hpp:54</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>pipico.hpp</b></li>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d4/d31/pipico_8hpp.html">pipico.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

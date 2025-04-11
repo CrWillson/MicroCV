@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['lcd_0',['LCD',['../d6/d25/namespace_l_c_d.html',1,'']]],
-  ['lcd_5fdraw_5fdata_1',['lcd_draw_data',['../d6/d25/namespace_l_c_d.html#acb14552e4b3d091da28fd0a3f5e076d3',1,'LCD::lcd_draw_data(SSD1306_t &amp;screen, std::string preamble, int data, int row=APPEND_ROW)'],['../d6/d25/namespace_l_c_d.html#a56b2e4337e6fd91d57386feeef129969',1,'LCD::lcd_draw_data(SSD1306_t &amp;screen, std::string preamble, bool data, int row=APPEND_ROW)']]],
-  ['lcd_5fdraw_5fmatrix_2',['lcd_draw_matrix',['../d6/d25/namespace_l_c_d.html#a82cc27ee62258f4b007ca720410d3288',1,'LCD']]],
-  ['lcd_5fdraw_5fstring_3',['lcd_draw_string',['../d6/d25/namespace_l_c_d.html#ad81edfa776335c7857abdeec9ab7ad6c',1,'LCD::lcd_draw_string(SSD1306_t &amp;screen, std::string &amp;string, int row=APPEND_ROW)'],['../d6/d25/namespace_l_c_d.html#a1f3e953465cda380a744f12d6e759808',1,'LCD::lcd_draw_string(SSD1306_t &amp;screen, std::vector&lt; std::string &gt; &amp;lines, int start_row=APPEND_ROW)']]],
-  ['loop_5fticks_4',['loop_ticks',['../d7/de6/class_l_c_d_1_1_print_params.html#a8d4d01c72934a9300902d9570cb79424',1,'LCD::PrintParams']]]
+  ['eps_0',['EPS',['../d2/dd5/opencv2_8hpp.html#a6ebf6899d6c1c8b7b9d09be872c05aae',1,'opencv2.hpp']]],
+  ['esp_20idf_20tools_20setup_1',['ESP-IDF Tools Setup',['../index.html#autotoc_md3',1,'']]],
+  ['esp_20idf_20vscode_20extension_20setup_2',['ESP-IDF VSCode Extension Setup',['../index.html#autotoc_md4',1,'']]],
+  ['esp_5fpacket_3',['ESP_PACKET',['../de/d69/communication__types_8hpp.html#a0628f13bcd4685c7a4b4a9f1aad83b56a0058a6abe910f2e7ad0266f8a1fb9088',1,'communication_types.hpp']]],
+  ['espcamera_4',['ESPCamera',['../d3/d98/namespace_e_s_p_camera.html',1,'']]],
+  ['espcommand_5',['EspCommand',['../de/d69/communication__types_8hpp.html#a7674802fdb5c95df8aafddba8cb6ee2a',1,'communication_types.hpp']]],
+  ['esptopicopacket_6',['EspToPicoPacket',['../d8/dfc/struct_esp_to_pico_packet.html',1,'']]],
+  ['extension_20setup_7',['ESP-IDF VSCode Extension Setup',['../index.html#autotoc_md4',1,'']]]
 ];
