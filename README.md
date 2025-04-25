@@ -4,7 +4,18 @@ OpenCV project for the AI Thinker ESP32-Cam.
 
 Written by: Caleb Willson and Andrew Huffman
 
+## Documentation
+Full Doxygen documentation can be found in [docs.html](./docs.html)
+
 ## Installation Instructions
+
+### Cloning
+The repository and its submodules can be cloned with the following command.
+
+```bash
+git clone --recurse-submodules https://github.com/CrWillson/ESPPhotoProcessor.git
+```
+
 ### Requirements
 This project was tested using:
 

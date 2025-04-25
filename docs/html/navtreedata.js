@@ -25,10 +25,12 @@
 var NAVTREE =
 [
   [ "MicroCV", "index.html", [
-    [ "Installation Instructions", "index.html#autotoc_md1", [
-      [ "Requirements", "index.html#autotoc_md2", null ],
-      [ "ESP-IDF Tools Setup", "index.html#autotoc_md3", null ],
-      [ "ESP-IDF VSCode Extension Setup", "index.html#autotoc_md4", null ]
+    [ "Documentation", "index.html#autotoc_md1", null ],
+    [ "Installation Instructions", "index.html#autotoc_md2", [
+      [ "Cloning", "index.html#autotoc_md3", null ],
+      [ "Requirements", "index.html#autotoc_md4", null ],
+      [ "ESP-IDF Tools Setup", "index.html#autotoc_md5", null ],
+      [ "ESP-IDF VSCode Extension Setup", "index.html#autotoc_md6", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
