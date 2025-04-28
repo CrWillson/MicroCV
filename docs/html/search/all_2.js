@@ -25,7 +25,7 @@ var searchData=
   ['carbox_5ftl_5fx_22',['CARBOX_TL_X',['../d4/dc2/namespace_params.html#a66b9f9f80fd84b85199c13de630a0678',1,'Params']]],
   ['carbox_5ftl_5fy_23',['CARBOX_TL_Y',['../d4/dc2/namespace_params.html#a35775771983241e4b63ba4d4e05218d7',1,'Params']]],
   ['clamp_5fcenter_5fpos_24',['CLAMP_CENTER_POS',['../d4/d21/namespace_micro_c_v2.html#a8135f9775a7bc6f297c80f880bd6260a',1,'MicroCV2']]],
-  ['cloning_25',['Cloning',['../index.html#autotoc_md3',1,'']]],
+  ['cloning_25',['Cloning',['../index.html#autotoc_md4',1,'']]],
   ['cmd_5frequest_5fimage_26',['CMD_REQUEST_IMAGE',['../de/d69/communication__types_8hpp.html#a7674802fdb5c95df8aafddba8cb6ee2aaf895e9786f6464b8b773bf84d78eab55',1,'communication_types.hpp']]],
   ['cmd_5fset_5fparam_27',['CMD_SET_PARAM',['../de/d69/communication__types_8hpp.html#a7674802fdb5c95df8aafddba8cb6ee2aa612544f01a28d64124a102a188fdb2d7',1,'communication_types.hpp']]],
   ['command_28',['command',['../dc/d61/struct_pico_to_esp_packet.html#a708441f122853b7cdfe93c4e83e195e2',1,'PicoToEspPacket']]],

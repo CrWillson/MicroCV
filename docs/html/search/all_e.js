@@ -5,7 +5,7 @@ var searchData=
   ['screen_5fwidth_2',['SCREEN_WIDTH',['../d6/d25/namespace_l_c_d.html#a0a6e4417b783536d839f94ace590440a',1,'LCD']]],
   ['screenmutex_3',['screenMutex',['../d6/d25/namespace_l_c_d.html#a14bbf3a6c68aa3928fbdc655b47a5ffd',1,'LCD']]],
   ['sendpacket_4',['sendPacket',['../d9/df9/class_pi_pico.html#aef1b3e6471306b098cc00aa14e18cd07',1,'PiPico::sendPacket(const uint8_t dist, const bool stopDetected)'],['../d9/df9/class_pi_pico.html#a378ca91ed2c48df6f17924ff6c4c4839',1,'PiPico::sendPacket(const uint8_t dist, const bool stopDetected, const cv::Mat &amp;image)']]],
-  ['setup_5',['Setup',['../index.html#autotoc_md5',1,'ESP-IDF Tools Setup'],['../index.html#autotoc_md6',1,'ESP-IDF VSCode Extension Setup']]],
+  ['setup_5',['Setup',['../index.html#autotoc_md6',1,'ESP-IDF Tools Setup'],['../index.html#autotoc_md7',1,'ESP-IDF VSCode Extension Setup']]],
   ['stop_5fblue_5ftolerance_6',['STOP_BLUE_TOLERANCE',['../d4/dc2/namespace_params.html#abd93354aa1af66434f72178ac312e321',1,'Params']]],
   ['stop_5fdetected_7',['stop_detected',['../d7/de6/class_l_c_d_1_1_print_params.html#a33f6edaeb29a1ef7214a351c9a66101f',1,'LCD::PrintParams']]],
   ['stop_5fgreen_5ftolerance_8',['STOP_GREEN_TOLERANCE',['../d4/dc2/namespace_params.html#a398a92b92583c2ac3104517a84fc9a49',1,'Params']]],

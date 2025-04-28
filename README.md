@@ -7,13 +7,29 @@ Written by: Caleb Willson and Andrew Huffman
 ## Documentation
 Full Doxygen documentation can be found in [docs.html](./docs.html)
 
+## Flashing the ESP32
+
+> [!NOTE]
+> When flashing the ESP32, the LCD screen on the ESP-32-CAM must be removed!
+> The reason for this (we believe) is because some of the pins which the LCD screen talks to overlap with those which the ESP-32 uses during its flash sequence! 
+
+> [!WARNING]
+> If the ESP-32 is connected to the computer via USB, make sure that it is not connected to the Junior Robot’s PCB! 
+> We want to avoid a situation where the ESP-32 is being powered from both the programmer computer and the battery through the PCB!
+
+To build the program, click the small wrench icon on the bottom bar of the VSCode window.
+
+To flash the program, select the lightning bolt icon on the bottom bar of the VSCode window.
+
+To build, flash, then monitor the serial line, click the small flame icon on the bottom bar of the VSCode window.
+
 ## Installation Instructions
 
 ### Cloning
 The repository and its submodules can be cloned with the following command.
 
 ```bash
-git clone --recurse-submodules https://github.com/CrWillson/ESPPhotoProcessor.git
+git clone --recurse-submodules https://github.com/CrWillson/MicroCV.git
 ```
 
 ### Requirements

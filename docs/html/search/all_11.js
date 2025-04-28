@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vscode_20extension_20setup_0',['ESP-IDF VSCode Extension Setup',['../index.html#autotoc_md6',1,'']]]
+  ['vscode_20extension_20setup_0',['ESP-IDF VSCode Extension Setup',['../index.html#autotoc_md7',1,'']]]
 ];
